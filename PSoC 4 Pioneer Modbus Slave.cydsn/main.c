@@ -1,56 +1,47 @@
 /* ========================================
  *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
+ * Copyright Sam Walsh, 2014
+ * All Rights Reserved.
  *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
+ * main.c put your code in here after the processMessage();
  *
  * ========================================
 */
 #include <project.h>
+#include <interrupts.h>
+#include <modbus.h>
+#define  forever    1
 
-uint8 volatile messageReceived = 0;
+extern unsigned int  holdingReg[50];
+extern unsigned char coils[50];
+extern unsigned char received[125];
+extern unsigned char response[125]; //Enough to return all holding-r's
+extern uint8 modbusMessage;
 
+//Main loop//
 int main()
-{
-    /* Place your initialization/startup code here (e.g. MyInst_Start()) */
-    volatile uint8 messageReceived = 0;
-    volatile uint8 endOfMessage,newMessage = 1;
-    uint8 lastLed = 0;
-    uint8 volatile ch;
-    
-    /* Start the SCB UART */
+{   
+    /*Clear received array */
+    memset(&received[0], 0, sizeof(received));
+       
+    /* Start the SCB UART, Timer and its interrupt */
     ModbusUART_Start();
+    MessageReceived_StartEx(messageReceived_isr);  
     
-    /* Start the Interrupt */
-    MessageReceived_Start();
-    
-    /* Transmit string through UART */
-    ModbusUART_UartPutString("UART Initialised");
+    writeEnable_Write(0); // receive mode
 
     CyGlobalIntEnable; /* Uncomment this line to enable global interrupts. */
     
-    for(;;)
-    {         
-        if(messageReceived)
+    while(forever)
+    {       
+        if(modbusMessage)
         {
-          if(lastLed == 0)
-            lastLed = 1;
-          else
-            lastLed = 0; 
-        
-          messageReceived = 0;
-          ch = ModbusUART_UartGetChar();
-          ModbusUART_UartPutChar(ch);
-        
-          RX_LED_Write(lastLed);       
+          processMessage();
         }
         
-        
-        
+        //Put your code here, just make sure you use holdingRegs and coils for your variables
+        //Eg "holdingReg[0] = temperature;"
+        //or "coils[1] = switchVal or LED = coils[2];
     }
 }
 
-/* [] END OF FILE */

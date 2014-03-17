@@ -1,0 +1,530 @@
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccdSvFkp.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"main.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.main,"ax",%progbits
+  18              		.align	2
+  19              		.global	main
+  20              		.code	16
+  21              		.thumb_func
+  22              		.type	main, %function
+  23              	main:
+  24              	.LFB33:
+  25              		.file 1 ".\\main.c"
+   1:.\main.c      **** /* ========================================
+   2:.\main.c      ****  *
+   3:.\main.c      ****  * Copyright Sam Walsh, 2014
+   4:.\main.c      ****  * All Rights Reserved.
+   5:.\main.c      ****  *
+   6:.\main.c      ****  * main.c put your code in here after the processMessage();
+   7:.\main.c      ****  *
+   8:.\main.c      ****  * ========================================
+   9:.\main.c      **** */
+  10:.\main.c      **** #include <project.h>
+  11:.\main.c      **** #include <interrupts.h>
+  12:.\main.c      **** #include <modbus.h>
+  13:.\main.c      **** #define  forever    1
+  14:.\main.c      **** 
+  15:.\main.c      **** extern unsigned int  holdingReg[50];
+  16:.\main.c      **** extern unsigned char coils[50];
+  17:.\main.c      **** extern unsigned char received[125];
+  18:.\main.c      **** extern unsigned char response[125]; //Enough to return all holding-r's
+  19:.\main.c      **** extern uint8 modbusMessage;
+  20:.\main.c      **** 
+  21:.\main.c      **** //Main loop//
+  22:.\main.c      **** int main()
+  23:.\main.c      **** {   
+  26              		.loc 1 23 0
+  27              		.cfi_startproc
+  28 0000 80B5     		push	{r7, lr}
+  29              	.LCFI0:
+  30              		.cfi_def_cfa_offset 8
+  31              		.cfi_offset 7, -8
+  32              		.cfi_offset 14, -4
+  33 0002 00AF     		add	r7, sp, #0
+  34              	.LCFI1:
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccdSvFkp.s 			page 2
+
+
+  35              		.cfi_def_cfa_register 7
+  24:.\main.c      ****     /*Clear received array */
+  25:.\main.c      ****     memset(&received[0], 0, sizeof(received));
+  36              		.loc 1 25 0
+  37 0004 0C4B     		ldr	r3, .L5
+  38 0006 181C     		mov	r0, r3
+  39 0008 0021     		mov	r1, #0
+  40 000a 7D22     		mov	r2, #125
+  41 000c FFF7FEFF 		bl	memset
+  26:.\main.c      ****        
+  27:.\main.c      ****     /* Start the SCB UART, Timer and its interrupt */
+  28:.\main.c      ****     ModbusUART_Start();
+  42              		.loc 1 28 0
+  43 0010 FFF7FEFF 		bl	ModbusUART_Start
+  29:.\main.c      ****     MessageReceived_StartEx(messageReceived_isr);  
+  44              		.loc 1 29 0
+  45 0014 094B     		ldr	r3, .L5+4
+  46 0016 181C     		mov	r0, r3
+  47 0018 FFF7FEFF 		bl	MessageReceived_StartEx
+  30:.\main.c      ****     
+  31:.\main.c      ****     writeEnable_Write(0); // receive mode
+  48              		.loc 1 31 0
+  49 001c 0020     		mov	r0, #0
+  50 001e FFF7FEFF 		bl	writeEnable_Write
+  32:.\main.c      **** 
+  33:.\main.c      ****     CyGlobalIntEnable; /* Uncomment this line to enable global interrupts. */
+  51              		.loc 1 33 0
+  52              	@ 33 ".\main.c" 1
+  53 0022 62B6     		CPSIE   i
+  54              	@ 0 "" 2
+  55              		.code	16
+  56 0024 00E0     		b	.L3
+  57              	.L4:
+  34:.\main.c      ****     
+  35:.\main.c      ****     while(forever)
+  36:.\main.c      ****     {       
+  37:.\main.c      ****         if(modbusMessage)
+  38:.\main.c      ****         {
+  39:.\main.c      ****           processMessage();
+  40:.\main.c      ****         }
+  41:.\main.c      ****         
+  42:.\main.c      ****         //Put your code here, just make sure you use holdingRegs and coils for your variables
+  43:.\main.c      ****         //Eg "holdingReg[0] = temperature;"
+  44:.\main.c      ****         //or "coils[1] = switchVal or LED = coils[2];
+  45:.\main.c      ****     }
+  58              		.loc 1 45 0
+  59 0026 C046     		mov	r8, r8
+  60              	.L3:
+  37:.\main.c      ****         if(modbusMessage)
+  61              		.loc 1 37 0
+  62 0028 054B     		ldr	r3, .L5+8
+  63 002a 1B78     		ldrb	r3, [r3]
+  64 002c 002B     		cmp	r3, #0
+  65 002e FAD0     		beq	.L4
+  39:.\main.c      ****           processMessage();
+  66              		.loc 1 39 0
+  67 0030 FFF7FEFF 		bl	processMessage
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccdSvFkp.s 			page 3
+
+
+  68              		.loc 1 45 0
+  69 0034 F7E7     		b	.L4
+  70              	.L6:
+  71 0036 C046     		.align	2
+  72              	.L5:
+  73 0038 00000000 		.word	received
+  74 003c 00000000 		.word	messageReceived_isr
+  75 0040 00000000 		.word	modbusMessage
+  76              		.cfi_endproc
+  77              	.LFE33:
+  78              		.size	main, .-main
+  79              		.text
+  80              	.Letext0:
+  81              		.file 2 "./Generated_Source/PSoC4/cytypes.h"
+  82              		.section	.debug_info,"",%progbits
+  83              	.Ldebug_info0:
+  84 0000 D6000000 		.4byte	0xd6
+  85 0004 0200     		.2byte	0x2
+  86 0006 00000000 		.4byte	.Ldebug_abbrev0
+  87 000a 04       		.byte	0x4
+  88 000b 01       		.uleb128 0x1
+  89 000c 29000000 		.4byte	.LASF15
+  90 0010 01       		.byte	0x1
+  91 0011 7B010000 		.4byte	.LASF16
+  92 0015 A1000000 		.4byte	.LASF17
+  93 0019 00000000 		.4byte	.Ldebug_ranges0+0
+  94 001d 00000000 		.4byte	0
+  95 0021 00000000 		.4byte	0
+  96 0025 00000000 		.4byte	.Ldebug_line0
+  97 0029 02       		.uleb128 0x2
+  98 002a 01       		.byte	0x1
+  99 002b 06       		.byte	0x6
+ 100 002c 69010000 		.4byte	.LASF0
+ 101 0030 02       		.uleb128 0x2
+ 102 0031 01       		.byte	0x1
+ 103 0032 08       		.byte	0x8
+ 104 0033 1B010000 		.4byte	.LASF1
+ 105 0037 02       		.uleb128 0x2
+ 106 0038 02       		.byte	0x2
+ 107 0039 05       		.byte	0x5
+ 108 003a 37010000 		.4byte	.LASF2
+ 109 003e 02       		.uleb128 0x2
+ 110 003f 02       		.byte	0x2
+ 111 0040 07       		.byte	0x7
+ 112 0041 56010000 		.4byte	.LASF3
+ 113 0045 02       		.uleb128 0x2
+ 114 0046 04       		.byte	0x4
+ 115 0047 05       		.byte	0x5
+ 116 0048 2E010000 		.4byte	.LASF4
+ 117 004c 02       		.uleb128 0x2
+ 118 004d 04       		.byte	0x4
+ 119 004e 07       		.byte	0x7
+ 120 004f 78000000 		.4byte	.LASF5
+ 121 0053 02       		.uleb128 0x2
+ 122 0054 08       		.byte	0x8
+ 123 0055 05       		.byte	0x5
+ 124 0056 00000000 		.4byte	.LASF6
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccdSvFkp.s 			page 4
+
+
+ 125 005a 02       		.uleb128 0x2
+ 126 005b 08       		.byte	0x8
+ 127 005c 07       		.byte	0x7
+ 128 005d 8A000000 		.4byte	.LASF7
+ 129 0061 03       		.uleb128 0x3
+ 130 0062 04       		.byte	0x4
+ 131 0063 05       		.byte	0x5
+ 132 0064 696E7400 		.ascii	"int\000"
+ 133 0068 02       		.uleb128 0x2
+ 134 0069 04       		.byte	0x4
+ 135 006a 07       		.byte	0x7
+ 136 006b 0E000000 		.4byte	.LASF8
+ 137 006f 04       		.uleb128 0x4
+ 138 0070 72000000 		.4byte	.LASF18
+ 139 0074 02       		.byte	0x2
+ 140 0075 5B       		.byte	0x5b
+ 141 0076 30000000 		.4byte	0x30
+ 142 007a 02       		.uleb128 0x2
+ 143 007b 04       		.byte	0x4
+ 144 007c 04       		.byte	0x4
+ 145 007d 75010000 		.4byte	.LASF9
+ 146 0081 02       		.uleb128 0x2
+ 147 0082 08       		.byte	0x8
+ 148 0083 04       		.byte	0x4
+ 149 0084 4F010000 		.4byte	.LASF10
+ 150 0088 02       		.uleb128 0x2
+ 151 0089 01       		.byte	0x1
+ 152 008a 08       		.byte	0x8
+ 153 008b 29010000 		.4byte	.LASF11
+ 154 008f 02       		.uleb128 0x2
+ 155 0090 04       		.byte	0x4
+ 156 0091 07       		.byte	0x7
+ 157 0092 84010000 		.4byte	.LASF12
+ 158 0096 05       		.uleb128 0x5
+ 159 0097 01       		.byte	0x1
+ 160 0098 24000000 		.4byte	.LASF19
+ 161 009c 01       		.byte	0x1
+ 162 009d 16       		.byte	0x16
+ 163 009e 61000000 		.4byte	0x61
+ 164 00a2 00000000 		.4byte	.LFB33
+ 165 00a6 44000000 		.4byte	.LFE33
+ 166 00aa 00000000 		.4byte	.LLST0
+ 167 00ae 01       		.byte	0x1
+ 168 00af 06       		.uleb128 0x6
+ 169 00b0 30000000 		.4byte	0x30
+ 170 00b4 BF000000 		.4byte	0xbf
+ 171 00b8 07       		.uleb128 0x7
+ 172 00b9 8F000000 		.4byte	0x8f
+ 173 00bd 7C       		.byte	0x7c
+ 174 00be 00       		.byte	0
+ 175 00bf 08       		.uleb128 0x8
+ 176 00c0 1B000000 		.4byte	.LASF13
+ 177 00c4 01       		.byte	0x1
+ 178 00c5 11       		.byte	0x11
+ 179 00c6 AF000000 		.4byte	0xaf
+ 180 00ca 01       		.byte	0x1
+ 181 00cb 01       		.byte	0x1
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccdSvFkp.s 			page 5
+
+
+ 182 00cc 08       		.uleb128 0x8
+ 183 00cd 41010000 		.4byte	.LASF14
+ 184 00d1 01       		.byte	0x1
+ 185 00d2 13       		.byte	0x13
+ 186 00d3 6F000000 		.4byte	0x6f
+ 187 00d7 01       		.byte	0x1
+ 188 00d8 01       		.byte	0x1
+ 189 00d9 00       		.byte	0
+ 190              		.section	.debug_abbrev,"",%progbits
+ 191              	.Ldebug_abbrev0:
+ 192 0000 01       		.uleb128 0x1
+ 193 0001 11       		.uleb128 0x11
+ 194 0002 01       		.byte	0x1
+ 195 0003 25       		.uleb128 0x25
+ 196 0004 0E       		.uleb128 0xe
+ 197 0005 13       		.uleb128 0x13
+ 198 0006 0B       		.uleb128 0xb
+ 199 0007 03       		.uleb128 0x3
+ 200 0008 0E       		.uleb128 0xe
+ 201 0009 1B       		.uleb128 0x1b
+ 202 000a 0E       		.uleb128 0xe
+ 203 000b 55       		.uleb128 0x55
+ 204 000c 06       		.uleb128 0x6
+ 205 000d 11       		.uleb128 0x11
+ 206 000e 01       		.uleb128 0x1
+ 207 000f 52       		.uleb128 0x52
+ 208 0010 01       		.uleb128 0x1
+ 209 0011 10       		.uleb128 0x10
+ 210 0012 06       		.uleb128 0x6
+ 211 0013 00       		.byte	0
+ 212 0014 00       		.byte	0
+ 213 0015 02       		.uleb128 0x2
+ 214 0016 24       		.uleb128 0x24
+ 215 0017 00       		.byte	0
+ 216 0018 0B       		.uleb128 0xb
+ 217 0019 0B       		.uleb128 0xb
+ 218 001a 3E       		.uleb128 0x3e
+ 219 001b 0B       		.uleb128 0xb
+ 220 001c 03       		.uleb128 0x3
+ 221 001d 0E       		.uleb128 0xe
+ 222 001e 00       		.byte	0
+ 223 001f 00       		.byte	0
+ 224 0020 03       		.uleb128 0x3
+ 225 0021 24       		.uleb128 0x24
+ 226 0022 00       		.byte	0
+ 227 0023 0B       		.uleb128 0xb
+ 228 0024 0B       		.uleb128 0xb
+ 229 0025 3E       		.uleb128 0x3e
+ 230 0026 0B       		.uleb128 0xb
+ 231 0027 03       		.uleb128 0x3
+ 232 0028 08       		.uleb128 0x8
+ 233 0029 00       		.byte	0
+ 234 002a 00       		.byte	0
+ 235 002b 04       		.uleb128 0x4
+ 236 002c 16       		.uleb128 0x16
+ 237 002d 00       		.byte	0
+ 238 002e 03       		.uleb128 0x3
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccdSvFkp.s 			page 6
+
+
+ 239 002f 0E       		.uleb128 0xe
+ 240 0030 3A       		.uleb128 0x3a
+ 241 0031 0B       		.uleb128 0xb
+ 242 0032 3B       		.uleb128 0x3b
+ 243 0033 0B       		.uleb128 0xb
+ 244 0034 49       		.uleb128 0x49
+ 245 0035 13       		.uleb128 0x13
+ 246 0036 00       		.byte	0
+ 247 0037 00       		.byte	0
+ 248 0038 05       		.uleb128 0x5
+ 249 0039 2E       		.uleb128 0x2e
+ 250 003a 00       		.byte	0
+ 251 003b 3F       		.uleb128 0x3f
+ 252 003c 0C       		.uleb128 0xc
+ 253 003d 03       		.uleb128 0x3
+ 254 003e 0E       		.uleb128 0xe
+ 255 003f 3A       		.uleb128 0x3a
+ 256 0040 0B       		.uleb128 0xb
+ 257 0041 3B       		.uleb128 0x3b
+ 258 0042 0B       		.uleb128 0xb
+ 259 0043 49       		.uleb128 0x49
+ 260 0044 13       		.uleb128 0x13
+ 261 0045 11       		.uleb128 0x11
+ 262 0046 01       		.uleb128 0x1
+ 263 0047 12       		.uleb128 0x12
+ 264 0048 01       		.uleb128 0x1
+ 265 0049 40       		.uleb128 0x40
+ 266 004a 06       		.uleb128 0x6
+ 267 004b 9642     		.uleb128 0x2116
+ 268 004d 0C       		.uleb128 0xc
+ 269 004e 00       		.byte	0
+ 270 004f 00       		.byte	0
+ 271 0050 06       		.uleb128 0x6
+ 272 0051 01       		.uleb128 0x1
+ 273 0052 01       		.byte	0x1
+ 274 0053 49       		.uleb128 0x49
+ 275 0054 13       		.uleb128 0x13
+ 276 0055 01       		.uleb128 0x1
+ 277 0056 13       		.uleb128 0x13
+ 278 0057 00       		.byte	0
+ 279 0058 00       		.byte	0
+ 280 0059 07       		.uleb128 0x7
+ 281 005a 21       		.uleb128 0x21
+ 282 005b 00       		.byte	0
+ 283 005c 49       		.uleb128 0x49
+ 284 005d 13       		.uleb128 0x13
+ 285 005e 2F       		.uleb128 0x2f
+ 286 005f 0B       		.uleb128 0xb
+ 287 0060 00       		.byte	0
+ 288 0061 00       		.byte	0
+ 289 0062 08       		.uleb128 0x8
+ 290 0063 34       		.uleb128 0x34
+ 291 0064 00       		.byte	0
+ 292 0065 03       		.uleb128 0x3
+ 293 0066 0E       		.uleb128 0xe
+ 294 0067 3A       		.uleb128 0x3a
+ 295 0068 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccdSvFkp.s 			page 7
+
+
+ 296 0069 3B       		.uleb128 0x3b
+ 297 006a 0B       		.uleb128 0xb
+ 298 006b 49       		.uleb128 0x49
+ 299 006c 13       		.uleb128 0x13
+ 300 006d 3F       		.uleb128 0x3f
+ 301 006e 0C       		.uleb128 0xc
+ 302 006f 3C       		.uleb128 0x3c
+ 303 0070 0C       		.uleb128 0xc
+ 304 0071 00       		.byte	0
+ 305 0072 00       		.byte	0
+ 306 0073 00       		.byte	0
+ 307              		.section	.debug_loc,"",%progbits
+ 308              	.Ldebug_loc0:
+ 309              	.LLST0:
+ 310 0000 00000000 		.4byte	.LFB33
+ 311 0004 02000000 		.4byte	.LCFI0
+ 312 0008 0200     		.2byte	0x2
+ 313 000a 7D       		.byte	0x7d
+ 314 000b 00       		.sleb128 0
+ 315 000c 02000000 		.4byte	.LCFI0
+ 316 0010 04000000 		.4byte	.LCFI1
+ 317 0014 0200     		.2byte	0x2
+ 318 0016 7D       		.byte	0x7d
+ 319 0017 08       		.sleb128 8
+ 320 0018 04000000 		.4byte	.LCFI1
+ 321 001c 44000000 		.4byte	.LFE33
+ 322 0020 0200     		.2byte	0x2
+ 323 0022 77       		.byte	0x77
+ 324 0023 08       		.sleb128 8
+ 325 0024 00000000 		.4byte	0
+ 326 0028 00000000 		.4byte	0
+ 327              		.section	.debug_aranges,"",%progbits
+ 328 0000 1C000000 		.4byte	0x1c
+ 329 0004 0200     		.2byte	0x2
+ 330 0006 00000000 		.4byte	.Ldebug_info0
+ 331 000a 04       		.byte	0x4
+ 332 000b 00       		.byte	0
+ 333 000c 0000     		.2byte	0
+ 334 000e 0000     		.2byte	0
+ 335 0010 00000000 		.4byte	.LFB33
+ 336 0014 44000000 		.4byte	.LFE33-.LFB33
+ 337 0018 00000000 		.4byte	0
+ 338 001c 00000000 		.4byte	0
+ 339              		.section	.debug_ranges,"",%progbits
+ 340              	.Ldebug_ranges0:
+ 341 0000 00000000 		.4byte	.LFB33
+ 342 0004 44000000 		.4byte	.LFE33
+ 343 0008 00000000 		.4byte	0
+ 344 000c 00000000 		.4byte	0
+ 345              		.section	.debug_line,"",%progbits
+ 346              	.Ldebug_line0:
+ 347 0000 67000000 		.section	.debug_str,"MS",%progbits,1
+ 347      02004500 
+ 347      00000201 
+ 347      FB0E0D00 
+ 347      01010101 
+ 348              	.LASF6:
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccdSvFkp.s 			page 8
+
+
+ 349 0000 6C6F6E67 		.ascii	"long long int\000"
+ 349      206C6F6E 
+ 349      6720696E 
+ 349      7400
+ 350              	.LASF8:
+ 351 000e 756E7369 		.ascii	"unsigned int\000"
+ 351      676E6564 
+ 351      20696E74 
+ 351      00
+ 352              	.LASF13:
+ 353 001b 72656365 		.ascii	"received\000"
+ 353      69766564 
+ 353      00
+ 354              	.LASF19:
+ 355 0024 6D61696E 		.ascii	"main\000"
+ 355      00
+ 356              	.LASF15:
+ 357 0029 474E5520 		.ascii	"GNU C 4.7.3 20130312 (release) [ARM/embedded-4_7-br"
+ 357      4320342E 
+ 357      372E3320 
+ 357      32303133 
+ 357      30333132 
+ 358 005c 616E6368 		.ascii	"anch revision 196615]\000"
+ 358      20726576 
+ 358      6973696F 
+ 358      6E203139 
+ 358      36363135 
+ 359              	.LASF18:
+ 360 0072 75696E74 		.ascii	"uint8\000"
+ 360      3800
+ 361              	.LASF5:
+ 362 0078 6C6F6E67 		.ascii	"long unsigned int\000"
+ 362      20756E73 
+ 362      69676E65 
+ 362      6420696E 
+ 362      7400
+ 363              	.LASF7:
+ 364 008a 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 364      206C6F6E 
+ 364      6720756E 
+ 364      7369676E 
+ 364      65642069 
+ 365              	.LASF17:
+ 366 00a1 433A5C55 		.ascii	"C:\\Users\\Sam\\Dropbox\\Work\\2014\\PSoC 4 Modbus "
+ 366      73657273 
+ 366      5C53616D 
+ 366      5C44726F 
+ 366      70626F78 
+ 367 00ce 536C6176 		.ascii	"Slave Software\\PSoC 4 Pioneer Modbus Slave\\PSoC 4"
+ 367      6520536F 
+ 367      66747761 
+ 367      72655C50 
+ 367      536F4320 
+ 368 00ff 2050696F 		.ascii	" Pioneer Modbus Slave.cydsn\000"
+ 368      6E656572 
+ 368      204D6F64 
+ 368      62757320 
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccdSvFkp.s 			page 9
+
+
+ 368      536C6176 
+ 369              	.LASF1:
+ 370 011b 756E7369 		.ascii	"unsigned char\000"
+ 370      676E6564 
+ 370      20636861 
+ 370      7200
+ 371              	.LASF11:
+ 372 0129 63686172 		.ascii	"char\000"
+ 372      00
+ 373              	.LASF4:
+ 374 012e 6C6F6E67 		.ascii	"long int\000"
+ 374      20696E74 
+ 374      00
+ 375              	.LASF2:
+ 376 0137 73686F72 		.ascii	"short int\000"
+ 376      7420696E 
+ 376      7400
+ 377              	.LASF14:
+ 378 0141 6D6F6462 		.ascii	"modbusMessage\000"
+ 378      75734D65 
+ 378      73736167 
+ 378      6500
+ 379              	.LASF10:
+ 380 014f 646F7562 		.ascii	"double\000"
+ 380      6C6500
+ 381              	.LASF3:
+ 382 0156 73686F72 		.ascii	"short unsigned int\000"
+ 382      7420756E 
+ 382      7369676E 
+ 382      65642069 
+ 382      6E7400
+ 383              	.LASF0:
+ 384 0169 7369676E 		.ascii	"signed char\000"
+ 384      65642063 
+ 384      68617200 
+ 385              	.LASF9:
+ 386 0175 666C6F61 		.ascii	"float\000"
+ 386      7400
+ 387              	.LASF16:
+ 388 017b 2E5C6D61 		.ascii	".\\main.c\000"
+ 388      696E2E63 
+ 388      00
+ 389              	.LASF12:
+ 390 0184 73697A65 		.ascii	"sizetype\000"
+ 390      74797065 
+ 390      00
+ 391              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.3 20130312 (release) [ARM/embedded-4_7-br

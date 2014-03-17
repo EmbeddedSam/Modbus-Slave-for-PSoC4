@@ -1,5 +1,5 @@
 # PSoC 4 Pioneer Modbus Slave
-# 2014-02-17 14:22:44Z
+# 2014-03-17 12:12:45Z
 
 # IO_2@[IOP=(3)][IoId=(2)] is reserved: SWDDebugEnabled
 dont_use_io iocell 3 2
@@ -7,10 +7,14 @@ dont_use_io iocell 3 2
 dont_use_io iocell 3 3
 set_location "ClockBlock" m0s8clockblockcell -1 -1 0
 set_location "ClockGenBlock" m0s8clockgenblockcell -1 -1 0
+set_location "EndOfMessage" interrupt -1 -1 16
 set_location "MessageReceived" interrupt -1 -1 11
-set_io "RX_LED(0)" iocell 0 2
-set_io "TX_LED(0)" iocell 0 3
+set_io "P0_2_LED(0)" iocell 0 2
+set_io "RX_LED(0)" iocell 0 1
+set_io "TX_LED(0)" iocell 1 5
+set_io "TimerPin(0)" iocell 0 0
 set_location "\MessageTimer:cy_m0s8_tcpwm_1\" m0s8tcpwmcell -1 -1 0
 set_location "\ModbusUART:SCB\" m0s8scbcell -1 -1 1
 set_io "\ModbusUART:rx(0)\" iocell 0 4
 set_io "\ModbusUART:tx(0)\" iocell 0 5
+set_io "writeEnable(0)" iocell 2 0

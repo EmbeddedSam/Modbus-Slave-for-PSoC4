@@ -26,9 +26,6 @@
 *  Place your includes, defines and code here 
 ********************************************************************************/
 /* `#START MessageReceived_intc` */
-    #include<ModbusUART.h>
-    extern volatile uint8 messageReceived;
-    extern volatile uint8 endOfMessage,newMessage;
 
 /* `#END` */
 
@@ -141,12 +138,7 @@ void MessageReceived_Stop(void)
 CY_ISR(MessageReceived_Interrupt)
 {
     /*  Place your Interrupt code here. */
-    uint32 source;
     /* `#START MessageReceived_Interrupt` */
-    messageReceived = 1;
-    
-    source = ModbusUART_GetRxInterruptSourceMasked();
-    ModbusUART_ClearRxInterruptSource(source);
 
     /* `#END` */
 }

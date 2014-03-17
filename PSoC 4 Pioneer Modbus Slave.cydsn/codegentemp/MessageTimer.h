@@ -66,7 +66,7 @@ extern uint8  MessageTimer_initVar;
 
 /* Timer/Counter Mode */
 /* Parameters */
-#define MessageTimer_TC_RUN_MODE                    (0lu)
+#define MessageTimer_TC_RUN_MODE                    (1lu)
 #define MessageTimer_TC_COUNTER_MODE                (0lu)
 #define MessageTimer_TC_COMP_CAP_MODE               (2lu)
 #define MessageTimer_TC_PRESCALER                   (0lu)
@@ -123,7 +123,7 @@ extern uint8  MessageTimer_initVar;
 ***************************************/
 
 /* Timer/Counter Mode */
-#define MessageTimer_TC_PERIOD_VALUE                (65535lu)
+#define MessageTimer_TC_PERIOD_VALUE                (209lu)
 #define MessageTimer_TC_COMPARE_VALUE               (65535lu)
 #define MessageTimer_TC_COMPARE_BUF_VALUE           (65535lu)
 #define MessageTimer_TC_COMPARE_SWAP                (0lu)

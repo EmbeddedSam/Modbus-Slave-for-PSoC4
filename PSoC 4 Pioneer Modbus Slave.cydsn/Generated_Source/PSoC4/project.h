@@ -28,8 +28,15 @@
 #include <RX_LED.h>
 #include <RX_LED_aliases.h>
 #include <MessageReceived.h>
+#include <TimerPin.h>
+#include <TimerPin_aliases.h>
+#include <EndOfMessage.h>
+#include <P0_2_LED.h>
+#include <P0_2_LED_aliases.h>
+#include <writeEnable.h>
+#include <writeEnable_aliases.h>
 #include <MessageTimer.h>
-#include <Clock_1.h>
+#include <MessageTimerClock.h>
 #include <ModbusUART_rx.h>
 #include <ModbusUART_rx_aliases.h>
 #include <ModbusUART_SCBCLK.h>

@@ -17,15 +17,15 @@
                     1::Clock Frequency Summary
 ===================================================================== 
 Number of clocks: 9
-Clock: Clock_1                 | N/A  | Target: 12.00 MHz  | 
-Clock: Clock_1(FFB)            | N/A  | Target: 12.00 MHz  | 
 Clock: CyHFCLK                 | N/A  | Target: 24.00 MHz  | 
 Clock: CyILO                   | N/A  | Target: 0.03 MHz   | 
 Clock: CyIMO                   | N/A  | Target: 24.00 MHz  | 
 Clock: CyLFCLK                 | N/A  | Target: 0.03 MHz   | 
 Clock: CySYSCLK                | N/A  | Target: 24.00 MHz  | 
-Clock: ModbusUART_SCBCLK       | N/A  | Target: 0.12 MHz   | 
-Clock: ModbusUART_SCBCLK(FFB)  | N/A  | Target: 0.12 MHz   | 
+Clock: MessageTimerClock       | N/A  | Target: 0.50 MHz   | 
+Clock: MessageTimerClock(FFB)  | N/A  | Target: 0.50 MHz   | 
+Clock: ModbusUART_SCBCLK       | N/A  | Target: 0.15 MHz   | 
+Clock: ModbusUART_SCBCLK(FFB)  | N/A  | Target: 0.15 MHz   | 
 
  =====================================================================
                     End of Clock Frequency Summary

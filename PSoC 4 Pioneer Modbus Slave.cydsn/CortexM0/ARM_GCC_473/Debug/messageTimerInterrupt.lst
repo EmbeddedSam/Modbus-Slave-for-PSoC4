@@ -1,0 +1,2194 @@
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"messageTimerInterrupt.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.messageTimerInterrupt_Start,"ax",%progbits
+  18              		.align	2
+  19              		.global	messageTimerInterrupt_Start
+  20              		.code	16
+  21              		.thumb_func
+  22              		.type	messageTimerInterrupt_Start, %function
+  23              	messageTimerInterrupt_Start:
+  24              	.LFB0:
+  25              		.file 1 ".\\Generated_Source\\PSoC4\\messageTimerInterrupt.c"
+   1:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** /*******************************************************************************
+   2:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * File Name: messageTimerInterrupt.c  
+   3:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Version 1.70
+   4:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+   5:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *  Description:
+   6:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   API for controlling the state of an interrupt.
+   7:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+   8:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+   9:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *  Note:
+  10:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+  11:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** ********************************************************************************
+  12:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Copyright 2008-2012, Cypress Semiconductor Corporation.  All rights reserved.
+  13:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * You may use this file only in accordance with the license, terms, conditions, 
+  14:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * disclaimers, and limitations in the end user license agreement accompanying 
+  15:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * the software package with which this file was provided.
+  16:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *******************************************************************************/
+  17:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+  18:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+  19:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** #include <cydevice_trm.h>
+  20:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** #include <CyLib.h>
+  21:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** #include <messageTimerInterrupt.h>
+  22:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+  23:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** #if !defined(messageTimerInterrupt__REMOVED) /* Check for removal by optimization */
+  24:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+  25:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** /*******************************************************************************
+  26:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *  Place your includes, defines and code here 
+  27:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** ********************************************************************************/
+  28:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** /* `#START messageTimerInterrupt_intc` */
+  29:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** #include <messageTimer.h>
+  30:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** extern uint8 volatile interruptFlag;
+  31:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** /* `#END` */
+  32:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 2
+
+
+  33:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** extern cyisraddress CyRamVectors[CYINT_IRQ_BASE + CY_NUM_INTERRUPTS];
+  34:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+  35:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** /* Declared in startup, used to set unused interrupts to. */
+  36:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** CY_ISR_PROTO(IntDefaultHandler);
+  37:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+  38:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+  39:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** /*******************************************************************************
+  40:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Function Name: messageTimerInterrupt_Start
+  41:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** ********************************************************************************
+  42:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+  43:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Summary:
+  44:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *  Set up the interrupt and enable it.
+  45:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+  46:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Parameters:  
+  47:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   None
+  48:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+  49:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Return:
+  50:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   None
+  51:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+  52:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *******************************************************************************/
+  53:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** void messageTimerInterrupt_Start(void)
+  54:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** {
+  26              		.loc 1 54 0
+  27              		.cfi_startproc
+  28 0000 80B5     		push	{r7, lr}
+  29              	.LCFI0:
+  30              		.cfi_def_cfa_offset 8
+  31              		.cfi_offset 7, -8
+  32              		.cfi_offset 14, -4
+  33 0002 00AF     		add	r7, sp, #0
+  34              	.LCFI1:
+  35              		.cfi_def_cfa_register 7
+  55:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     /* For all we know the interrupt is active. */
+  56:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     messageTimerInterrupt_Disable();
+  36              		.loc 1 56 0
+  37 0004 FFF7FEFF 		bl	messageTimerInterrupt_Disable
+  57:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+  58:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     /* Set the ISR to point to the messageTimerInterrupt Interrupt. */
+  59:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     messageTimerInterrupt_SetVector(&messageTimerInterrupt_Interrupt);
+  38              		.loc 1 59 0
+  39 0008 054B     		ldr	r3, .L2
+  40 000a 181C     		mov	r0, r3
+  41 000c FFF7FEFF 		bl	messageTimerInterrupt_SetVector
+  60:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+  61:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     /* Set the priority. */
+  62:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     messageTimerInterrupt_SetPriority((uint8)messageTimerInterrupt_INTC_PRIOR_NUMBER);
+  42              		.loc 1 62 0
+  43 0010 0120     		mov	r0, #1
+  44 0012 FFF7FEFF 		bl	messageTimerInterrupt_SetPriority
+  63:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+  64:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     /* Enable it. */
+  65:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     messageTimerInterrupt_Enable();
+  45              		.loc 1 65 0
+  46 0016 FFF7FEFF 		bl	messageTimerInterrupt_Enable
+  66:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** }
+  47              		.loc 1 66 0
+  48 001a BD46     		mov	sp, r7
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 3
+
+
+  49              		@ sp needed for prologue
+  50 001c 80BD     		pop	{r7, pc}
+  51              	.L3:
+  52 001e C046     		.align	2
+  53              	.L2:
+  54 0020 00000000 		.word	messageTimerInterrupt_Interrupt
+  55              		.cfi_endproc
+  56              	.LFE0:
+  57              		.size	messageTimerInterrupt_Start, .-messageTimerInterrupt_Start
+  58              		.section	.text.messageTimerInterrupt_StartEx,"ax",%progbits
+  59              		.align	2
+  60              		.global	messageTimerInterrupt_StartEx
+  61              		.code	16
+  62              		.thumb_func
+  63              		.type	messageTimerInterrupt_StartEx, %function
+  64              	messageTimerInterrupt_StartEx:
+  65              	.LFB1:
+  67:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+  68:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+  69:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** /*******************************************************************************
+  70:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Function Name: messageTimerInterrupt_StartEx
+  71:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** ********************************************************************************
+  72:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+  73:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Summary:
+  74:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *  Set up the interrupt and enable it.
+  75:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+  76:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Parameters:  
+  77:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   address: Address of the ISR to set in the interrupt vector table.
+  78:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+  79:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Return:
+  80:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   None
+  81:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+  82:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *******************************************************************************/
+  83:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** void messageTimerInterrupt_StartEx(cyisraddress address)
+  84:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** {
+  66              		.loc 1 84 0
+  67              		.cfi_startproc
+  68 0000 80B5     		push	{r7, lr}
+  69              	.LCFI2:
+  70              		.cfi_def_cfa_offset 8
+  71              		.cfi_offset 7, -8
+  72              		.cfi_offset 14, -4
+  73 0002 82B0     		sub	sp, sp, #8
+  74              	.LCFI3:
+  75              		.cfi_def_cfa_offset 16
+  76 0004 00AF     		add	r7, sp, #0
+  77              	.LCFI4:
+  78              		.cfi_def_cfa_register 7
+  79 0006 7860     		str	r0, [r7, #4]
+  85:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     /* For all we know the interrupt is active. */
+  86:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     messageTimerInterrupt_Disable();
+  80              		.loc 1 86 0
+  81 0008 FFF7FEFF 		bl	messageTimerInterrupt_Disable
+  87:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+  88:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     /* Set the ISR to point to the messageTimerInterrupt Interrupt. */
+  89:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     messageTimerInterrupt_SetVector(address);
+  82              		.loc 1 89 0
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 4
+
+
+  83 000c 7B68     		ldr	r3, [r7, #4]
+  84 000e 181C     		mov	r0, r3
+  85 0010 FFF7FEFF 		bl	messageTimerInterrupt_SetVector
+  90:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+  91:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     /* Set the priority. */
+  92:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     messageTimerInterrupt_SetPriority((uint8)messageTimerInterrupt_INTC_PRIOR_NUMBER);
+  86              		.loc 1 92 0
+  87 0014 0120     		mov	r0, #1
+  88 0016 FFF7FEFF 		bl	messageTimerInterrupt_SetPriority
+  93:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+  94:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     /* Enable it. */
+  95:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     messageTimerInterrupt_Enable();
+  89              		.loc 1 95 0
+  90 001a FFF7FEFF 		bl	messageTimerInterrupt_Enable
+  96:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** }
+  91              		.loc 1 96 0
+  92 001e BD46     		mov	sp, r7
+  93 0020 02B0     		add	sp, sp, #8
+  94              		@ sp needed for prologue
+  95 0022 80BD     		pop	{r7, pc}
+  96              		.cfi_endproc
+  97              	.LFE1:
+  98              		.size	messageTimerInterrupt_StartEx, .-messageTimerInterrupt_StartEx
+  99              		.section	.text.messageTimerInterrupt_Stop,"ax",%progbits
+ 100              		.align	2
+ 101              		.global	messageTimerInterrupt_Stop
+ 102              		.code	16
+ 103              		.thumb_func
+ 104              		.type	messageTimerInterrupt_Stop, %function
+ 105              	messageTimerInterrupt_Stop:
+ 106              	.LFB2:
+  97:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+  98:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+  99:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** /*******************************************************************************
+ 100:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Function Name: messageTimerInterrupt_Stop
+ 101:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** ********************************************************************************
+ 102:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 103:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Summary:
+ 104:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   Disables and removes the interrupt.
+ 105:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 106:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Parameters:  
+ 107:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 108:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Return:
+ 109:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   None
+ 110:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 111:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *******************************************************************************/
+ 112:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** void messageTimerInterrupt_Stop(void)
+ 113:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** {
+ 107              		.loc 1 113 0
+ 108              		.cfi_startproc
+ 109 0000 80B5     		push	{r7, lr}
+ 110              	.LCFI5:
+ 111              		.cfi_def_cfa_offset 8
+ 112              		.cfi_offset 7, -8
+ 113              		.cfi_offset 14, -4
+ 114 0002 00AF     		add	r7, sp, #0
+ 115              	.LCFI6:
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 5
+
+
+ 116              		.cfi_def_cfa_register 7
+ 114:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     /* Disable this interrupt. */
+ 115:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     messageTimerInterrupt_Disable();
+ 117              		.loc 1 115 0
+ 118 0004 FFF7FEFF 		bl	messageTimerInterrupt_Disable
+ 116:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 117:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     /* Set the ISR to point to the passive one. */
+ 118:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     messageTimerInterrupt_SetVector(&IntDefaultHandler);
+ 119              		.loc 1 118 0
+ 120 0008 024B     		ldr	r3, .L6
+ 121 000a 181C     		mov	r0, r3
+ 122 000c FFF7FEFF 		bl	messageTimerInterrupt_SetVector
+ 119:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** }
+ 123              		.loc 1 119 0
+ 124 0010 BD46     		mov	sp, r7
+ 125              		@ sp needed for prologue
+ 126 0012 80BD     		pop	{r7, pc}
+ 127              	.L7:
+ 128              		.align	2
+ 129              	.L6:
+ 130 0014 00000000 		.word	IntDefaultHandler
+ 131              		.cfi_endproc
+ 132              	.LFE2:
+ 133              		.size	messageTimerInterrupt_Stop, .-messageTimerInterrupt_Stop
+ 134              		.section	.text.messageTimerInterrupt_Interrupt,"ax",%progbits
+ 135              		.align	2
+ 136              		.global	messageTimerInterrupt_Interrupt
+ 137              		.code	16
+ 138              		.thumb_func
+ 139              		.type	messageTimerInterrupt_Interrupt, %function
+ 140              	messageTimerInterrupt_Interrupt:
+ 141              	.LFB3:
+ 120:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 121:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 122:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** /*******************************************************************************
+ 123:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Function Name: messageTimerInterrupt_Interrupt
+ 124:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** ********************************************************************************
+ 125:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 126:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Summary:
+ 127:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   The default Interrupt Service Routine for messageTimerInterrupt.
+ 128:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 129:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   Add custom code between the coments to keep the next version of this file
+ 130:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   from over writting your code.
+ 131:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 132:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Parameters:  
+ 133:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   None
+ 134:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 135:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Return:
+ 136:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   None
+ 137:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 138:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *******************************************************************************/
+ 139:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** CY_ISR(messageTimerInterrupt_Interrupt)
+ 140:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** {
+ 142              		.loc 1 140 0
+ 143              		.cfi_startproc
+ 144 0000 80B5     		push	{r7, lr}
+ 145              	.LCFI7:
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 6
+
+
+ 146              		.cfi_def_cfa_offset 8
+ 147              		.cfi_offset 7, -8
+ 148              		.cfi_offset 14, -4
+ 149 0002 00AF     		add	r7, sp, #0
+ 150              	.LCFI8:
+ 151              		.cfi_def_cfa_register 7
+ 141:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     /*  Place your Interrupt code here. */
+ 142:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     /* `#START messageTimerInterrupt_Interrupt` */
+ 143:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 144:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     /* `#END` */
+ 145:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** }
+ 152              		.loc 1 145 0
+ 153 0004 BD46     		mov	sp, r7
+ 154              		@ sp needed for prologue
+ 155 0006 80BD     		pop	{r7, pc}
+ 156              		.cfi_endproc
+ 157              	.LFE3:
+ 158              		.size	messageTimerInterrupt_Interrupt, .-messageTimerInterrupt_Interrupt
+ 159              		.section	.text.messageTimerInterrupt_SetVector,"ax",%progbits
+ 160              		.align	2
+ 161              		.global	messageTimerInterrupt_SetVector
+ 162              		.code	16
+ 163              		.thumb_func
+ 164              		.type	messageTimerInterrupt_SetVector, %function
+ 165              	messageTimerInterrupt_SetVector:
+ 166              	.LFB4:
+ 146:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 147:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 148:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** /*******************************************************************************
+ 149:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Function Name: messageTimerInterrupt_SetVector
+ 150:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** ********************************************************************************
+ 151:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 152:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Summary:
+ 153:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   Change the ISR vector for the Interrupt. Note calling messageTimerInterrupt_Start
+ 154:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   will override any effect this method would have had. To set the vector 
+ 155:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   before the component has been started use messageTimerInterrupt_StartEx instead.
+ 156:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 157:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Parameters:
+ 158:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   address: Address of the ISR to set in the interrupt vector table.
+ 159:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 160:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Return:
+ 161:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   None
+ 162:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 163:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *******************************************************************************/
+ 164:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** void messageTimerInterrupt_SetVector(cyisraddress address)
+ 165:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** {
+ 167              		.loc 1 165 0
+ 168              		.cfi_startproc
+ 169 0000 80B5     		push	{r7, lr}
+ 170              	.LCFI9:
+ 171              		.cfi_def_cfa_offset 8
+ 172              		.cfi_offset 7, -8
+ 173              		.cfi_offset 14, -4
+ 174 0002 82B0     		sub	sp, sp, #8
+ 175              	.LCFI10:
+ 176              		.cfi_def_cfa_offset 16
+ 177 0004 00AF     		add	r7, sp, #0
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 7
+
+
+ 178              	.LCFI11:
+ 179              		.cfi_def_cfa_register 7
+ 180 0006 7860     		str	r0, [r7, #4]
+ 166:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     CyRamVectors[CYINT_IRQ_BASE + messageTimerInterrupt__INTC_NUMBER] = address;
+ 181              		.loc 1 166 0
+ 182 0008 034A     		ldr	r2, .L10
+ 183 000a 8023     		mov	r3, #128
+ 184 000c 7968     		ldr	r1, [r7, #4]
+ 185 000e D150     		str	r1, [r2, r3]
+ 167:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** }
+ 186              		.loc 1 167 0
+ 187 0010 BD46     		mov	sp, r7
+ 188 0012 02B0     		add	sp, sp, #8
+ 189              		@ sp needed for prologue
+ 190 0014 80BD     		pop	{r7, pc}
+ 191              	.L11:
+ 192 0016 C046     		.align	2
+ 193              	.L10:
+ 194 0018 00000000 		.word	CyRamVectors
+ 195              		.cfi_endproc
+ 196              	.LFE4:
+ 197              		.size	messageTimerInterrupt_SetVector, .-messageTimerInterrupt_SetVector
+ 198              		.section	.text.messageTimerInterrupt_GetVector,"ax",%progbits
+ 199              		.align	2
+ 200              		.global	messageTimerInterrupt_GetVector
+ 201              		.code	16
+ 202              		.thumb_func
+ 203              		.type	messageTimerInterrupt_GetVector, %function
+ 204              	messageTimerInterrupt_GetVector:
+ 205              	.LFB5:
+ 168:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 169:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 170:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** /*******************************************************************************
+ 171:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Function Name: messageTimerInterrupt_GetVector
+ 172:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** ********************************************************************************
+ 173:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 174:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Summary:
+ 175:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   Gets the "address" of the current ISR vector for the Interrupt.
+ 176:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 177:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Parameters:
+ 178:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   None
+ 179:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 180:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Return:
+ 181:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   Address of the ISR in the interrupt vector table.
+ 182:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 183:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *******************************************************************************/
+ 184:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** cyisraddress messageTimerInterrupt_GetVector(void)
+ 185:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** {
+ 206              		.loc 1 185 0
+ 207              		.cfi_startproc
+ 208 0000 80B5     		push	{r7, lr}
+ 209              	.LCFI12:
+ 210              		.cfi_def_cfa_offset 8
+ 211              		.cfi_offset 7, -8
+ 212              		.cfi_offset 14, -4
+ 213 0002 00AF     		add	r7, sp, #0
+ 214              	.LCFI13:
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 8
+
+
+ 215              		.cfi_def_cfa_register 7
+ 186:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     return CyRamVectors[CYINT_IRQ_BASE + messageTimerInterrupt__INTC_NUMBER];
+ 216              		.loc 1 186 0
+ 217 0004 024A     		ldr	r2, .L14
+ 218 0006 8023     		mov	r3, #128
+ 219 0008 D358     		ldr	r3, [r2, r3]
+ 187:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** }
+ 220              		.loc 1 187 0
+ 221 000a 181C     		mov	r0, r3
+ 222 000c BD46     		mov	sp, r7
+ 223              		@ sp needed for prologue
+ 224 000e 80BD     		pop	{r7, pc}
+ 225              	.L15:
+ 226              		.align	2
+ 227              	.L14:
+ 228 0010 00000000 		.word	CyRamVectors
+ 229              		.cfi_endproc
+ 230              	.LFE5:
+ 231              		.size	messageTimerInterrupt_GetVector, .-messageTimerInterrupt_GetVector
+ 232              		.section	.text.messageTimerInterrupt_SetPriority,"ax",%progbits
+ 233              		.align	2
+ 234              		.global	messageTimerInterrupt_SetPriority
+ 235              		.code	16
+ 236              		.thumb_func
+ 237              		.type	messageTimerInterrupt_SetPriority, %function
+ 238              	messageTimerInterrupt_SetPriority:
+ 239              	.LFB6:
+ 188:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 189:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 190:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** /*******************************************************************************
+ 191:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Function Name: messageTimerInterrupt_SetPriority
+ 192:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** ********************************************************************************
+ 193:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 194:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Summary:
+ 195:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   Sets the Priority of the Interrupt. Note calling messageTimerInterrupt_Start
+ 196:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   or messageTimerInterrupt_StartEx will override any effect this method would 
+ 197:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   have had. This method should only be called after messageTimerInterrupt_Start or 
+ 198:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   messageTimerInterrupt_StartEx has been called. To set the initial
+ 199:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   priority for the component use the cydwr file in the tool.
+ 200:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 201:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Parameters:
+ 202:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   priority: Priority of the interrupt. 0 - 3, 0 being the highest.
+ 203:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 204:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Return:
+ 205:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   None
+ 206:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 207:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *******************************************************************************/
+ 208:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** void messageTimerInterrupt_SetPriority(uint8 priority)
+ 209:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** {
+ 240              		.loc 1 209 0
+ 241              		.cfi_startproc
+ 242 0000 90B5     		push	{r4, r7, lr}
+ 243              	.LCFI14:
+ 244              		.cfi_def_cfa_offset 12
+ 245              		.cfi_offset 4, -12
+ 246              		.cfi_offset 7, -8
+ 247              		.cfi_offset 14, -4
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 9
+
+
+ 248 0002 85B0     		sub	sp, sp, #20
+ 249              	.LCFI15:
+ 250              		.cfi_def_cfa_offset 32
+ 251 0004 00AF     		add	r7, sp, #0
+ 252              	.LCFI16:
+ 253              		.cfi_def_cfa_register 7
+ 254 0006 021C     		mov	r2, r0
+ 255 0008 FB1D     		add	r3, r7, #7
+ 256 000a 1A70     		strb	r2, [r3]
+ 210:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 	uint8 interruptState;
+ 211:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     uint32 priorityOffset = ((messageTimerInterrupt__INTC_NUMBER % 4u) * 8u) + 6u;
+ 257              		.loc 1 211 0
+ 258 000c 0623     		mov	r3, #6
+ 259 000e FB60     		str	r3, [r7, #12]
+ 212:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     
+ 213:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 	interruptState = CyEnterCriticalSection();
+ 260              		.loc 1 213 0
+ 261 0010 3C1C     		mov	r4, r7
+ 262 0012 0B34     		add	r4, r4, #11
+ 263 0014 FFF7FEFF 		bl	CyEnterCriticalSection
+ 264 0018 031C     		mov	r3, r0
+ 265 001a 2370     		strb	r3, [r4]
+ 214:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     *messageTimerInterrupt_INTC_PRIOR = (*messageTimerInterrupt_INTC_PRIOR & (uint32)(~messageTimer
+ 266              		.loc 1 214 0
+ 267 001c 0B4B     		ldr	r3, .L17
+ 268 001e 0B4A     		ldr	r2, .L17
+ 269 0020 1268     		ldr	r2, [r2]
+ 270 0022 C021     		mov	r1, #192
+ 271 0024 101C     		mov	r0, r2
+ 272 0026 8843     		bic	r0, r1
+ 273 0028 011C     		mov	r1, r0
+ 215:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****                                     ((uint32)priority << priorityOffset);
+ 274              		.loc 1 215 0
+ 275 002a FA1D     		add	r2, r7, #7
+ 276 002c 1078     		ldrb	r0, [r2]
+ 277 002e FA68     		ldr	r2, [r7, #12]
+ 278 0030 041C     		mov	r4, r0
+ 279 0032 9440     		lsl	r4, r4, r2
+ 280 0034 221C     		mov	r2, r4
+ 214:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     *messageTimerInterrupt_INTC_PRIOR = (*messageTimerInterrupt_INTC_PRIOR & (uint32)(~messageTimer
+ 281              		.loc 1 214 0
+ 282 0036 0A43     		orr	r2, r1
+ 283 0038 1A60     		str	r2, [r3]
+ 216:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 	CyExitCriticalSection(interruptState);
+ 284              		.loc 1 216 0
+ 285 003a 3B1C     		mov	r3, r7
+ 286 003c 0B33     		add	r3, r3, #11
+ 287 003e 1B78     		ldrb	r3, [r3]
+ 288 0040 181C     		mov	r0, r3
+ 289 0042 FFF7FEFF 		bl	CyExitCriticalSection
+ 217:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** }
+ 290              		.loc 1 217 0
+ 291 0046 BD46     		mov	sp, r7
+ 292 0048 05B0     		add	sp, sp, #20
+ 293              		@ sp needed for prologue
+ 294 004a 90BD     		pop	{r4, r7, pc}
+ 295              	.L18:
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 10
+
+
+ 296              		.align	2
+ 297              	.L17:
+ 298 004c 10E400E0 		.word	-536812528
+ 299              		.cfi_endproc
+ 300              	.LFE6:
+ 301              		.size	messageTimerInterrupt_SetPriority, .-messageTimerInterrupt_SetPriority
+ 302              		.section	.text.messageTimerInterrupt_GetPriority,"ax",%progbits
+ 303              		.align	2
+ 304              		.global	messageTimerInterrupt_GetPriority
+ 305              		.code	16
+ 306              		.thumb_func
+ 307              		.type	messageTimerInterrupt_GetPriority, %function
+ 308              	messageTimerInterrupt_GetPriority:
+ 309              	.LFB7:
+ 218:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 219:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 220:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** /*******************************************************************************
+ 221:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Function Name: messageTimerInterrupt_GetPriority
+ 222:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** ********************************************************************************
+ 223:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 224:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Summary:
+ 225:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   Gets the Priority of the Interrupt.
+ 226:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 227:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Parameters:
+ 228:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   None
+ 229:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 230:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Return:
+ 231:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   Priority of the interrupt. 0 - 3, 0 being the highest.
+ 232:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 233:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *******************************************************************************/
+ 234:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** uint8 messageTimerInterrupt_GetPriority(void)
+ 235:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** {
+ 310              		.loc 1 235 0
+ 311              		.cfi_startproc
+ 312 0000 80B5     		push	{r7, lr}
+ 313              	.LCFI17:
+ 314              		.cfi_def_cfa_offset 8
+ 315              		.cfi_offset 7, -8
+ 316              		.cfi_offset 14, -4
+ 317 0002 82B0     		sub	sp, sp, #8
+ 318              	.LCFI18:
+ 319              		.cfi_def_cfa_offset 16
+ 320 0004 00AF     		add	r7, sp, #0
+ 321              	.LCFI19:
+ 322              		.cfi_def_cfa_register 7
+ 236:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     uint32 priority;
+ 237:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 	uint32 priorityOffset = ((messageTimerInterrupt__INTC_NUMBER % 4u) * 8u) + 6u;
+ 323              		.loc 1 237 0
+ 324 0006 0623     		mov	r3, #6
+ 325 0008 7B60     		str	r3, [r7, #4]
+ 238:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 239:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     priority = (*messageTimerInterrupt_INTC_PRIOR & messageTimerInterrupt__INTC_PRIOR_MASK) >> prio
+ 326              		.loc 1 239 0
+ 327 000a 074B     		ldr	r3, .L21
+ 328 000c 1A68     		ldr	r2, [r3]
+ 329 000e C023     		mov	r3, #192
+ 330 0010 1A40     		and	r2, r3
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 11
+
+
+ 331 0012 7B68     		ldr	r3, [r7, #4]
+ 332 0014 111C     		mov	r1, r2
+ 333 0016 D940     		lsr	r1, r1, r3
+ 334 0018 0B1C     		mov	r3, r1
+ 335 001a 3B60     		str	r3, [r7]
+ 240:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 241:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     return (uint8)priority;
+ 336              		.loc 1 241 0
+ 337 001c 3B68     		ldr	r3, [r7]
+ 338 001e DBB2     		uxtb	r3, r3
+ 242:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** }
+ 339              		.loc 1 242 0
+ 340 0020 181C     		mov	r0, r3
+ 341 0022 BD46     		mov	sp, r7
+ 342 0024 02B0     		add	sp, sp, #8
+ 343              		@ sp needed for prologue
+ 344 0026 80BD     		pop	{r7, pc}
+ 345              	.L22:
+ 346              		.align	2
+ 347              	.L21:
+ 348 0028 10E400E0 		.word	-536812528
+ 349              		.cfi_endproc
+ 350              	.LFE7:
+ 351              		.size	messageTimerInterrupt_GetPriority, .-messageTimerInterrupt_GetPriority
+ 352              		.section	.text.messageTimerInterrupt_Enable,"ax",%progbits
+ 353              		.align	2
+ 354              		.global	messageTimerInterrupt_Enable
+ 355              		.code	16
+ 356              		.thumb_func
+ 357              		.type	messageTimerInterrupt_Enable, %function
+ 358              	messageTimerInterrupt_Enable:
+ 359              	.LFB8:
+ 243:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 244:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 245:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** /*******************************************************************************
+ 246:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Function Name: messageTimerInterrupt_Enable
+ 247:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** ********************************************************************************
+ 248:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 249:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Summary:
+ 250:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   Enables the interrupt.
+ 251:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 252:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Parameters:
+ 253:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   None
+ 254:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 255:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Return:
+ 256:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   None
+ 257:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 258:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *******************************************************************************/
+ 259:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** void messageTimerInterrupt_Enable(void)
+ 260:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** {
+ 360              		.loc 1 260 0
+ 361              		.cfi_startproc
+ 362 0000 80B5     		push	{r7, lr}
+ 363              	.LCFI20:
+ 364              		.cfi_def_cfa_offset 8
+ 365              		.cfi_offset 7, -8
+ 366              		.cfi_offset 14, -4
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 12
+
+
+ 367 0002 00AF     		add	r7, sp, #0
+ 368              	.LCFI21:
+ 369              		.cfi_def_cfa_register 7
+ 261:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     /* Enable the general interrupt. */
+ 262:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     *messageTimerInterrupt_INTC_SET_EN = messageTimerInterrupt__INTC_MASK;
+ 370              		.loc 1 262 0
+ 371 0004 024B     		ldr	r3, .L24
+ 372 0006 8022     		mov	r2, #128
+ 373 0008 5202     		lsl	r2, r2, #9
+ 374 000a 1A60     		str	r2, [r3]
+ 263:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** }
+ 375              		.loc 1 263 0
+ 376 000c BD46     		mov	sp, r7
+ 377              		@ sp needed for prologue
+ 378 000e 80BD     		pop	{r7, pc}
+ 379              	.L25:
+ 380              		.align	2
+ 381              	.L24:
+ 382 0010 00E100E0 		.word	-536813312
+ 383              		.cfi_endproc
+ 384              	.LFE8:
+ 385              		.size	messageTimerInterrupt_Enable, .-messageTimerInterrupt_Enable
+ 386              		.section	.text.messageTimerInterrupt_GetState,"ax",%progbits
+ 387              		.align	2
+ 388              		.global	messageTimerInterrupt_GetState
+ 389              		.code	16
+ 390              		.thumb_func
+ 391              		.type	messageTimerInterrupt_GetState, %function
+ 392              	messageTimerInterrupt_GetState:
+ 393              	.LFB9:
+ 264:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 265:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 266:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** /*******************************************************************************
+ 267:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Function Name: messageTimerInterrupt_GetState
+ 268:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** ********************************************************************************
+ 269:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 270:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Summary:
+ 271:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   Gets the state (enabled, disabled) of the Interrupt.
+ 272:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 273:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Parameters:
+ 274:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   None
+ 275:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 276:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Return:
+ 277:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   1 if enabled, 0 if disabled.
+ 278:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 279:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *******************************************************************************/
+ 280:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** uint8 messageTimerInterrupt_GetState(void)
+ 281:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** {
+ 394              		.loc 1 281 0
+ 395              		.cfi_startproc
+ 396 0000 80B5     		push	{r7, lr}
+ 397              	.LCFI22:
+ 398              		.cfi_def_cfa_offset 8
+ 399              		.cfi_offset 7, -8
+ 400              		.cfi_offset 14, -4
+ 401 0002 00AF     		add	r7, sp, #0
+ 402              	.LCFI23:
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 13
+
+
+ 403              		.cfi_def_cfa_register 7
+ 282:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     /* Get the state of the general interrupt. */
+ 283:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     return ((*messageTimerInterrupt_INTC_SET_EN & (uint32)messageTimerInterrupt__INTC_MASK) != 0u) 
+ 404              		.loc 1 283 0
+ 405 0004 054B     		ldr	r3, .L30
+ 406 0006 1A68     		ldr	r2, [r3]
+ 407 0008 8023     		mov	r3, #128
+ 408 000a 5B02     		lsl	r3, r3, #9
+ 409 000c 1340     		and	r3, r2
+ 410 000e 01D0     		beq	.L27
+ 411              		.loc 1 283 0 is_stmt 0 discriminator 1
+ 412 0010 0123     		mov	r3, #1
+ 413 0012 00E0     		b	.L28
+ 414              	.L27:
+ 415              		.loc 1 283 0 discriminator 2
+ 416 0014 0023     		mov	r3, #0
+ 417              	.L28:
+ 284:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** }
+ 418              		.loc 1 284 0 is_stmt 1 discriminator 3
+ 419 0016 181C     		mov	r0, r3
+ 420 0018 BD46     		mov	sp, r7
+ 421              		@ sp needed for prologue
+ 422 001a 80BD     		pop	{r7, pc}
+ 423              	.L31:
+ 424              		.align	2
+ 425              	.L30:
+ 426 001c 00E100E0 		.word	-536813312
+ 427              		.cfi_endproc
+ 428              	.LFE9:
+ 429              		.size	messageTimerInterrupt_GetState, .-messageTimerInterrupt_GetState
+ 430              		.section	.text.messageTimerInterrupt_Disable,"ax",%progbits
+ 431              		.align	2
+ 432              		.global	messageTimerInterrupt_Disable
+ 433              		.code	16
+ 434              		.thumb_func
+ 435              		.type	messageTimerInterrupt_Disable, %function
+ 436              	messageTimerInterrupt_Disable:
+ 437              	.LFB10:
+ 285:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 286:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 287:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** /*******************************************************************************
+ 288:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Function Name: messageTimerInterrupt_Disable
+ 289:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** ********************************************************************************
+ 290:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 291:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Summary:
+ 292:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   Disables the Interrupt.
+ 293:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 294:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Parameters:
+ 295:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   None
+ 296:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 297:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Return:
+ 298:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   None
+ 299:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 300:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *******************************************************************************/
+ 301:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** void messageTimerInterrupt_Disable(void)
+ 302:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** {
+ 438              		.loc 1 302 0
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 14
+
+
+ 439              		.cfi_startproc
+ 440 0000 80B5     		push	{r7, lr}
+ 441              	.LCFI24:
+ 442              		.cfi_def_cfa_offset 8
+ 443              		.cfi_offset 7, -8
+ 444              		.cfi_offset 14, -4
+ 445 0002 00AF     		add	r7, sp, #0
+ 446              	.LCFI25:
+ 447              		.cfi_def_cfa_register 7
+ 303:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     /* Disable the general interrupt. */
+ 304:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     *messageTimerInterrupt_INTC_CLR_EN = messageTimerInterrupt__INTC_MASK;
+ 448              		.loc 1 304 0
+ 449 0004 024B     		ldr	r3, .L33
+ 450 0006 8022     		mov	r2, #128
+ 451 0008 5202     		lsl	r2, r2, #9
+ 452 000a 1A60     		str	r2, [r3]
+ 305:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** }
+ 453              		.loc 1 305 0
+ 454 000c BD46     		mov	sp, r7
+ 455              		@ sp needed for prologue
+ 456 000e 80BD     		pop	{r7, pc}
+ 457              	.L34:
+ 458              		.align	2
+ 459              	.L33:
+ 460 0010 80E100E0 		.word	-536813184
+ 461              		.cfi_endproc
+ 462              	.LFE10:
+ 463              		.size	messageTimerInterrupt_Disable, .-messageTimerInterrupt_Disable
+ 464              		.section	.text.messageTimerInterrupt_SetPending,"ax",%progbits
+ 465              		.align	2
+ 466              		.global	messageTimerInterrupt_SetPending
+ 467              		.code	16
+ 468              		.thumb_func
+ 469              		.type	messageTimerInterrupt_SetPending, %function
+ 470              	messageTimerInterrupt_SetPending:
+ 471              	.LFB11:
+ 306:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 307:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 308:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** /*******************************************************************************
+ 309:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Function Name: messageTimerInterrupt_SetPending
+ 310:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** ********************************************************************************
+ 311:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 312:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Summary:
+ 313:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   Causes the Interrupt to enter the pending state, a software method of
+ 314:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   generating the interrupt.
+ 315:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 316:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Parameters:
+ 317:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   None
+ 318:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 319:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Return:
+ 320:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   None
+ 321:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 322:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *******************************************************************************/
+ 323:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** void messageTimerInterrupt_SetPending(void)
+ 324:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** {
+ 472              		.loc 1 324 0
+ 473              		.cfi_startproc
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 15
+
+
+ 474 0000 80B5     		push	{r7, lr}
+ 475              	.LCFI26:
+ 476              		.cfi_def_cfa_offset 8
+ 477              		.cfi_offset 7, -8
+ 478              		.cfi_offset 14, -4
+ 479 0002 00AF     		add	r7, sp, #0
+ 480              	.LCFI27:
+ 481              		.cfi_def_cfa_register 7
+ 325:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     *messageTimerInterrupt_INTC_SET_PD = messageTimerInterrupt__INTC_MASK;
+ 482              		.loc 1 325 0
+ 483 0004 024B     		ldr	r3, .L36
+ 484 0006 8022     		mov	r2, #128
+ 485 0008 5202     		lsl	r2, r2, #9
+ 486 000a 1A60     		str	r2, [r3]
+ 326:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** }
+ 487              		.loc 1 326 0
+ 488 000c BD46     		mov	sp, r7
+ 489              		@ sp needed for prologue
+ 490 000e 80BD     		pop	{r7, pc}
+ 491              	.L37:
+ 492              		.align	2
+ 493              	.L36:
+ 494 0010 00E200E0 		.word	-536813056
+ 495              		.cfi_endproc
+ 496              	.LFE11:
+ 497              		.size	messageTimerInterrupt_SetPending, .-messageTimerInterrupt_SetPending
+ 498              		.section	.text.messageTimerInterrupt_ClearPending,"ax",%progbits
+ 499              		.align	2
+ 500              		.global	messageTimerInterrupt_ClearPending
+ 501              		.code	16
+ 502              		.thumb_func
+ 503              		.type	messageTimerInterrupt_ClearPending, %function
+ 504              	messageTimerInterrupt_ClearPending:
+ 505              	.LFB12:
+ 327:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 328:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** 
+ 329:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** /*******************************************************************************
+ 330:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Function Name: messageTimerInterrupt_ClearPending
+ 331:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** ********************************************************************************
+ 332:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 333:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Summary:
+ 334:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   Clears a pending interrupt.
+ 335:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 336:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Parameters:
+ 337:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   None
+ 338:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 339:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** * Return:
+ 340:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *   None
+ 341:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *
+ 342:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** *******************************************************************************/
+ 343:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** void messageTimerInterrupt_ClearPending(void)
+ 344:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** {
+ 506              		.loc 1 344 0
+ 507              		.cfi_startproc
+ 508 0000 80B5     		push	{r7, lr}
+ 509              	.LCFI28:
+ 510              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 16
+
+
+ 511              		.cfi_offset 7, -8
+ 512              		.cfi_offset 14, -4
+ 513 0002 00AF     		add	r7, sp, #0
+ 514              	.LCFI29:
+ 515              		.cfi_def_cfa_register 7
+ 345:.\Generated_Source\PSoC4/messageTimerInterrupt.c ****     *messageTimerInterrupt_INTC_CLR_PD = messageTimerInterrupt__INTC_MASK;
+ 516              		.loc 1 345 0
+ 517 0004 024B     		ldr	r3, .L39
+ 518 0006 8022     		mov	r2, #128
+ 519 0008 5202     		lsl	r2, r2, #9
+ 520 000a 1A60     		str	r2, [r3]
+ 346:.\Generated_Source\PSoC4/messageTimerInterrupt.c **** }
+ 521              		.loc 1 346 0
+ 522 000c BD46     		mov	sp, r7
+ 523              		@ sp needed for prologue
+ 524 000e 80BD     		pop	{r7, pc}
+ 525              	.L40:
+ 526              		.align	2
+ 527              	.L39:
+ 528 0010 80E200E0 		.word	-536812928
+ 529              		.cfi_endproc
+ 530              	.LFE12:
+ 531              		.size	messageTimerInterrupt_ClearPending, .-messageTimerInterrupt_ClearPending
+ 532              		.text
+ 533              	.Letext0:
+ 534              		.file 2 "./Generated_Source/PSoC4/cytypes.h"
+ 535              		.section	.debug_info,"",%progbits
+ 536              	.Ldebug_info0:
+ 537 0000 84020000 		.4byte	0x284
+ 538 0004 0200     		.2byte	0x2
+ 539 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 540 000a 04       		.byte	0x4
+ 541 000b 01       		.uleb128 0x1
+ 542 000c A8020000 		.4byte	.LASF33
+ 543 0010 01       		.byte	0x1
+ 544 0011 55030000 		.4byte	.LASF34
+ 545 0015 D1010000 		.4byte	.LASF35
+ 546 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 547 001d 00000000 		.4byte	0
+ 548 0021 00000000 		.4byte	0
+ 549 0025 00000000 		.4byte	.Ldebug_line0
+ 550 0029 02       		.uleb128 0x2
+ 551 002a 01       		.byte	0x1
+ 552 002b 06       		.byte	0x6
+ 553 002c 26030000 		.4byte	.LASF0
+ 554 0030 02       		.uleb128 0x2
+ 555 0031 01       		.byte	0x1
+ 556 0032 08       		.byte	0x8
+ 557 0033 A7000000 		.4byte	.LASF1
+ 558 0037 02       		.uleb128 0x2
+ 559 0038 02       		.byte	0x2
+ 560 0039 05       		.byte	0x5
+ 561 003a 69010000 		.4byte	.LASF2
+ 562 003e 02       		.uleb128 0x2
+ 563 003f 02       		.byte	0x2
+ 564 0040 07       		.byte	0x7
+ 565 0041 51000000 		.4byte	.LASF3
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 17
+
+
+ 566 0045 02       		.uleb128 0x2
+ 567 0046 04       		.byte	0x4
+ 568 0047 05       		.byte	0x5
+ 569 0048 00030000 		.4byte	.LASF4
+ 570 004c 02       		.uleb128 0x2
+ 571 004d 04       		.byte	0x4
+ 572 004e 07       		.byte	0x7
+ 573 004f C4000000 		.4byte	.LASF5
+ 574 0053 02       		.uleb128 0x2
+ 575 0054 08       		.byte	0x8
+ 576 0055 05       		.byte	0x5
+ 577 0056 54020000 		.4byte	.LASF6
+ 578 005a 02       		.uleb128 0x2
+ 579 005b 08       		.byte	0x8
+ 580 005c 07       		.byte	0x7
+ 581 005d AD010000 		.4byte	.LASF7
+ 582 0061 03       		.uleb128 0x3
+ 583 0062 04       		.byte	0x4
+ 584 0063 05       		.byte	0x5
+ 585 0064 696E7400 		.ascii	"int\000"
+ 586 0068 02       		.uleb128 0x2
+ 587 0069 04       		.byte	0x4
+ 588 006a 07       		.byte	0x7
+ 589 006b 98010000 		.4byte	.LASF8
+ 590 006f 04       		.uleb128 0x4
+ 591 0070 D6000000 		.4byte	.LASF9
+ 592 0074 02       		.byte	0x2
+ 593 0075 5B       		.byte	0x5b
+ 594 0076 30000000 		.4byte	0x30
+ 595 007a 04       		.uleb128 0x4
+ 596 007b 91010000 		.4byte	.LASF10
+ 597 007f 02       		.byte	0x2
+ 598 0080 5D       		.byte	0x5d
+ 599 0081 4C000000 		.4byte	0x4c
+ 600 0085 02       		.uleb128 0x2
+ 601 0086 04       		.byte	0x4
+ 602 0087 04       		.byte	0x4
+ 603 0088 A1000000 		.4byte	.LASF11
+ 604 008c 02       		.uleb128 0x2
+ 605 008d 08       		.byte	0x8
+ 606 008e 04       		.byte	0x4
+ 607 008f 26010000 		.4byte	.LASF12
+ 608 0093 02       		.uleb128 0x2
+ 609 0094 01       		.byte	0x1
+ 610 0095 08       		.byte	0x8
+ 611 0096 62020000 		.4byte	.LASF13
+ 612 009a 04       		.uleb128 0x4
+ 613 009b 00000000 		.4byte	.LASF14
+ 614 009f 02       		.byte	0x2
+ 615 00a0 F2       		.byte	0xf2
+ 616 00a1 A5000000 		.4byte	0xa5
+ 617 00a5 05       		.uleb128 0x5
+ 618 00a6 7A000000 		.4byte	0x7a
+ 619 00aa 06       		.uleb128 0x6
+ 620 00ab C4010000 		.4byte	.LASF15
+ 621 00af 02       		.byte	0x2
+ 622 00b0 0201     		.2byte	0x102
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 18
+
+
+ 623 00b2 B6000000 		.4byte	0xb6
+ 624 00b6 07       		.uleb128 0x7
+ 625 00b7 04       		.byte	0x4
+ 626 00b8 BC000000 		.4byte	0xbc
+ 627 00bc 08       		.uleb128 0x8
+ 628 00bd 01       		.byte	0x1
+ 629 00be 02       		.uleb128 0x2
+ 630 00bf 04       		.byte	0x4
+ 631 00c0 07       		.byte	0x7
+ 632 00c1 4B020000 		.4byte	.LASF16
+ 633 00c5 09       		.uleb128 0x9
+ 634 00c6 01       		.byte	0x1
+ 635 00c7 4D010000 		.4byte	.LASF17
+ 636 00cb 01       		.byte	0x1
+ 637 00cc 35       		.byte	0x35
+ 638 00cd 01       		.byte	0x1
+ 639 00ce 00000000 		.4byte	.LFB0
+ 640 00d2 24000000 		.4byte	.LFE0
+ 641 00d6 00000000 		.4byte	.LLST0
+ 642 00da 01       		.byte	0x1
+ 643 00db 0A       		.uleb128 0xa
+ 644 00dc 01       		.byte	0x1
+ 645 00dd 73010000 		.4byte	.LASF20
+ 646 00e1 01       		.byte	0x1
+ 647 00e2 53       		.byte	0x53
+ 648 00e3 01       		.byte	0x1
+ 649 00e4 00000000 		.4byte	.LFB1
+ 650 00e8 24000000 		.4byte	.LFE1
+ 651 00ec 2C000000 		.4byte	.LLST1
+ 652 00f0 01       		.byte	0x1
+ 653 00f1 04010000 		.4byte	0x104
+ 654 00f5 0B       		.uleb128 0xb
+ 655 00f6 A5010000 		.4byte	.LASF22
+ 656 00fa 01       		.byte	0x1
+ 657 00fb 53       		.byte	0x53
+ 658 00fc AA000000 		.4byte	0xaa
+ 659 0100 02       		.byte	0x2
+ 660 0101 91       		.byte	0x91
+ 661 0102 74       		.sleb128 -12
+ 662 0103 00       		.byte	0
+ 663 0104 09       		.uleb128 0x9
+ 664 0105 01       		.byte	0x1
+ 665 0106 86000000 		.4byte	.LASF18
+ 666 010a 01       		.byte	0x1
+ 667 010b 70       		.byte	0x70
+ 668 010c 01       		.byte	0x1
+ 669 010d 00000000 		.4byte	.LFB2
+ 670 0111 18000000 		.4byte	.LFE2
+ 671 0115 64000000 		.4byte	.LLST2
+ 672 0119 01       		.byte	0x1
+ 673 011a 0C       		.uleb128 0xc
+ 674 011b 01       		.byte	0x1
+ 675 011c 2D010000 		.4byte	.LASF19
+ 676 0120 01       		.byte	0x1
+ 677 0121 8B       		.byte	0x8b
+ 678 0122 01       		.byte	0x1
+ 679 0123 00000000 		.4byte	.LFB3
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 19
+
+
+ 680 0127 08000000 		.4byte	.LFE3
+ 681 012b 90000000 		.4byte	.LLST3
+ 682 012f 01       		.byte	0x1
+ 683 0130 0D       		.uleb128 0xd
+ 684 0131 01       		.byte	0x1
+ 685 0132 06000000 		.4byte	.LASF21
+ 686 0136 01       		.byte	0x1
+ 687 0137 A4       		.byte	0xa4
+ 688 0138 01       		.byte	0x1
+ 689 0139 00000000 		.4byte	.LFB4
+ 690 013d 1C000000 		.4byte	.LFE4
+ 691 0141 BC000000 		.4byte	.LLST4
+ 692 0145 01       		.byte	0x1
+ 693 0146 59010000 		.4byte	0x159
+ 694 014a 0B       		.uleb128 0xb
+ 695 014b A5010000 		.4byte	.LASF22
+ 696 014f 01       		.byte	0x1
+ 697 0150 A4       		.byte	0xa4
+ 698 0151 AA000000 		.4byte	0xaa
+ 699 0155 02       		.byte	0x2
+ 700 0156 91       		.byte	0x91
+ 701 0157 74       		.sleb128 -12
+ 702 0158 00       		.byte	0
+ 703 0159 0E       		.uleb128 0xe
+ 704 015a 01       		.byte	0x1
+ 705 015b 06010000 		.4byte	.LASF28
+ 706 015f 01       		.byte	0x1
+ 707 0160 B8       		.byte	0xb8
+ 708 0161 01       		.byte	0x1
+ 709 0162 AA000000 		.4byte	0xaa
+ 710 0166 00000000 		.4byte	.LFB5
+ 711 016a 14000000 		.4byte	.LFE5
+ 712 016e F4000000 		.4byte	.LLST5
+ 713 0172 01       		.byte	0x1
+ 714 0173 0A       		.uleb128 0xa
+ 715 0174 01       		.byte	0x1
+ 716 0175 64000000 		.4byte	.LASF23
+ 717 0179 01       		.byte	0x1
+ 718 017a D0       		.byte	0xd0
+ 719 017b 01       		.byte	0x1
+ 720 017c 00000000 		.4byte	.LFB6
+ 721 0180 50000000 		.4byte	.LFE6
+ 722 0184 20010000 		.4byte	.LLST6
+ 723 0188 01       		.byte	0x1
+ 724 0189 B8010000 		.4byte	0x1b8
+ 725 018d 0B       		.uleb128 0xb
+ 726 018e FD000000 		.4byte	.LASF24
+ 727 0192 01       		.byte	0x1
+ 728 0193 D0       		.byte	0xd0
+ 729 0194 6F000000 		.4byte	0x6f
+ 730 0198 02       		.byte	0x2
+ 731 0199 91       		.byte	0x91
+ 732 019a 67       		.sleb128 -25
+ 733 019b 0F       		.uleb128 0xf
+ 734 019c B5000000 		.4byte	.LASF25
+ 735 01a0 01       		.byte	0x1
+ 736 01a1 D2       		.byte	0xd2
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 20
+
+
+ 737 01a2 6F000000 		.4byte	0x6f
+ 738 01a6 02       		.byte	0x2
+ 739 01a7 91       		.byte	0x91
+ 740 01a8 6B       		.sleb128 -21
+ 741 01a9 0F       		.uleb128 0xf
+ 742 01aa F1020000 		.4byte	.LASF26
+ 743 01ae 01       		.byte	0x1
+ 744 01af D3       		.byte	0xd3
+ 745 01b0 7A000000 		.4byte	0x7a
+ 746 01b4 02       		.byte	0x2
+ 747 01b5 91       		.byte	0x91
+ 748 01b6 6C       		.sleb128 -20
+ 749 01b7 00       		.byte	0
+ 750 01b8 10       		.uleb128 0x10
+ 751 01b9 01       		.byte	0x1
+ 752 01ba 86020000 		.4byte	.LASF36
+ 753 01be 01       		.byte	0x1
+ 754 01bf EA       		.byte	0xea
+ 755 01c0 01       		.byte	0x1
+ 756 01c1 6F000000 		.4byte	0x6f
+ 757 01c5 00000000 		.4byte	.LFB7
+ 758 01c9 2C000000 		.4byte	.LFE7
+ 759 01cd 58010000 		.4byte	.LLST7
+ 760 01d1 01       		.byte	0x1
+ 761 01d2 F3010000 		.4byte	0x1f3
+ 762 01d6 0F       		.uleb128 0xf
+ 763 01d7 FD000000 		.4byte	.LASF24
+ 764 01db 01       		.byte	0x1
+ 765 01dc EC       		.byte	0xec
+ 766 01dd 7A000000 		.4byte	0x7a
+ 767 01e1 02       		.byte	0x2
+ 768 01e2 91       		.byte	0x91
+ 769 01e3 70       		.sleb128 -16
+ 770 01e4 0F       		.uleb128 0xf
+ 771 01e5 F1020000 		.4byte	.LASF26
+ 772 01e9 01       		.byte	0x1
+ 773 01ea ED       		.byte	0xed
+ 774 01eb 7A000000 		.4byte	0x7a
+ 775 01ef 02       		.byte	0x2
+ 776 01f0 91       		.byte	0x91
+ 777 01f1 74       		.sleb128 -12
+ 778 01f2 00       		.byte	0
+ 779 01f3 11       		.uleb128 0x11
+ 780 01f4 01       		.byte	0x1
+ 781 01f5 09030000 		.4byte	.LASF27
+ 782 01f9 01       		.byte	0x1
+ 783 01fa 0301     		.2byte	0x103
+ 784 01fc 01       		.byte	0x1
+ 785 01fd 00000000 		.4byte	.LFB8
+ 786 0201 14000000 		.4byte	.LFE8
+ 787 0205 90010000 		.4byte	.LLST8
+ 788 0209 01       		.byte	0x1
+ 789 020a 12       		.uleb128 0x12
+ 790 020b 01       		.byte	0x1
+ 791 020c 67020000 		.4byte	.LASF29
+ 792 0210 01       		.byte	0x1
+ 793 0211 1801     		.2byte	0x118
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 21
+
+
+ 794 0213 01       		.byte	0x1
+ 795 0214 6F000000 		.4byte	0x6f
+ 796 0218 00000000 		.4byte	.LFB9
+ 797 021c 20000000 		.4byte	.LFE9
+ 798 0220 BC010000 		.4byte	.LLST9
+ 799 0224 01       		.byte	0x1
+ 800 0225 11       		.uleb128 0x11
+ 801 0226 01       		.byte	0x1
+ 802 0227 33000000 		.4byte	.LASF30
+ 803 022b 01       		.byte	0x1
+ 804 022c 2D01     		.2byte	0x12d
+ 805 022e 01       		.byte	0x1
+ 806 022f 00000000 		.4byte	.LFB10
+ 807 0233 14000000 		.4byte	.LFE10
+ 808 0237 E8010000 		.4byte	.LLST10
+ 809 023b 01       		.byte	0x1
+ 810 023c 11       		.uleb128 0x11
+ 811 023d 01       		.byte	0x1
+ 812 023e DC000000 		.4byte	.LASF31
+ 813 0242 01       		.byte	0x1
+ 814 0243 4301     		.2byte	0x143
+ 815 0245 01       		.byte	0x1
+ 816 0246 00000000 		.4byte	.LFB11
+ 817 024a 14000000 		.4byte	.LFE11
+ 818 024e 14020000 		.4byte	.LLST11
+ 819 0252 01       		.byte	0x1
+ 820 0253 11       		.uleb128 0x11
+ 821 0254 01       		.byte	0x1
+ 822 0255 32030000 		.4byte	.LASF32
+ 823 0259 01       		.byte	0x1
+ 824 025a 5701     		.2byte	0x157
+ 825 025c 01       		.byte	0x1
+ 826 025d 00000000 		.4byte	.LFB12
+ 827 0261 14000000 		.4byte	.LFE12
+ 828 0265 40020000 		.4byte	.LLST12
+ 829 0269 01       		.byte	0x1
+ 830 026a 13       		.uleb128 0x13
+ 831 026b AA000000 		.4byte	0xaa
+ 832 026f 7A020000 		.4byte	0x27a
+ 833 0273 14       		.uleb128 0x14
+ 834 0274 BE000000 		.4byte	0xbe
+ 835 0278 2F       		.byte	0x2f
+ 836 0279 00       		.byte	0
+ 837 027a 15       		.uleb128 0x15
+ 838 027b 26000000 		.4byte	.LASF37
+ 839 027f 01       		.byte	0x1
+ 840 0280 21       		.byte	0x21
+ 841 0281 6A020000 		.4byte	0x26a
+ 842 0285 01       		.byte	0x1
+ 843 0286 01       		.byte	0x1
+ 844 0287 00       		.byte	0
+ 845              		.section	.debug_abbrev,"",%progbits
+ 846              	.Ldebug_abbrev0:
+ 847 0000 01       		.uleb128 0x1
+ 848 0001 11       		.uleb128 0x11
+ 849 0002 01       		.byte	0x1
+ 850 0003 25       		.uleb128 0x25
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 22
+
+
+ 851 0004 0E       		.uleb128 0xe
+ 852 0005 13       		.uleb128 0x13
+ 853 0006 0B       		.uleb128 0xb
+ 854 0007 03       		.uleb128 0x3
+ 855 0008 0E       		.uleb128 0xe
+ 856 0009 1B       		.uleb128 0x1b
+ 857 000a 0E       		.uleb128 0xe
+ 858 000b 55       		.uleb128 0x55
+ 859 000c 06       		.uleb128 0x6
+ 860 000d 11       		.uleb128 0x11
+ 861 000e 01       		.uleb128 0x1
+ 862 000f 52       		.uleb128 0x52
+ 863 0010 01       		.uleb128 0x1
+ 864 0011 10       		.uleb128 0x10
+ 865 0012 06       		.uleb128 0x6
+ 866 0013 00       		.byte	0
+ 867 0014 00       		.byte	0
+ 868 0015 02       		.uleb128 0x2
+ 869 0016 24       		.uleb128 0x24
+ 870 0017 00       		.byte	0
+ 871 0018 0B       		.uleb128 0xb
+ 872 0019 0B       		.uleb128 0xb
+ 873 001a 3E       		.uleb128 0x3e
+ 874 001b 0B       		.uleb128 0xb
+ 875 001c 03       		.uleb128 0x3
+ 876 001d 0E       		.uleb128 0xe
+ 877 001e 00       		.byte	0
+ 878 001f 00       		.byte	0
+ 879 0020 03       		.uleb128 0x3
+ 880 0021 24       		.uleb128 0x24
+ 881 0022 00       		.byte	0
+ 882 0023 0B       		.uleb128 0xb
+ 883 0024 0B       		.uleb128 0xb
+ 884 0025 3E       		.uleb128 0x3e
+ 885 0026 0B       		.uleb128 0xb
+ 886 0027 03       		.uleb128 0x3
+ 887 0028 08       		.uleb128 0x8
+ 888 0029 00       		.byte	0
+ 889 002a 00       		.byte	0
+ 890 002b 04       		.uleb128 0x4
+ 891 002c 16       		.uleb128 0x16
+ 892 002d 00       		.byte	0
+ 893 002e 03       		.uleb128 0x3
+ 894 002f 0E       		.uleb128 0xe
+ 895 0030 3A       		.uleb128 0x3a
+ 896 0031 0B       		.uleb128 0xb
+ 897 0032 3B       		.uleb128 0x3b
+ 898 0033 0B       		.uleb128 0xb
+ 899 0034 49       		.uleb128 0x49
+ 900 0035 13       		.uleb128 0x13
+ 901 0036 00       		.byte	0
+ 902 0037 00       		.byte	0
+ 903 0038 05       		.uleb128 0x5
+ 904 0039 35       		.uleb128 0x35
+ 905 003a 00       		.byte	0
+ 906 003b 49       		.uleb128 0x49
+ 907 003c 13       		.uleb128 0x13
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 23
+
+
+ 908 003d 00       		.byte	0
+ 909 003e 00       		.byte	0
+ 910 003f 06       		.uleb128 0x6
+ 911 0040 16       		.uleb128 0x16
+ 912 0041 00       		.byte	0
+ 913 0042 03       		.uleb128 0x3
+ 914 0043 0E       		.uleb128 0xe
+ 915 0044 3A       		.uleb128 0x3a
+ 916 0045 0B       		.uleb128 0xb
+ 917 0046 3B       		.uleb128 0x3b
+ 918 0047 05       		.uleb128 0x5
+ 919 0048 49       		.uleb128 0x49
+ 920 0049 13       		.uleb128 0x13
+ 921 004a 00       		.byte	0
+ 922 004b 00       		.byte	0
+ 923 004c 07       		.uleb128 0x7
+ 924 004d 0F       		.uleb128 0xf
+ 925 004e 00       		.byte	0
+ 926 004f 0B       		.uleb128 0xb
+ 927 0050 0B       		.uleb128 0xb
+ 928 0051 49       		.uleb128 0x49
+ 929 0052 13       		.uleb128 0x13
+ 930 0053 00       		.byte	0
+ 931 0054 00       		.byte	0
+ 932 0055 08       		.uleb128 0x8
+ 933 0056 15       		.uleb128 0x15
+ 934 0057 00       		.byte	0
+ 935 0058 27       		.uleb128 0x27
+ 936 0059 0C       		.uleb128 0xc
+ 937 005a 00       		.byte	0
+ 938 005b 00       		.byte	0
+ 939 005c 09       		.uleb128 0x9
+ 940 005d 2E       		.uleb128 0x2e
+ 941 005e 00       		.byte	0
+ 942 005f 3F       		.uleb128 0x3f
+ 943 0060 0C       		.uleb128 0xc
+ 944 0061 03       		.uleb128 0x3
+ 945 0062 0E       		.uleb128 0xe
+ 946 0063 3A       		.uleb128 0x3a
+ 947 0064 0B       		.uleb128 0xb
+ 948 0065 3B       		.uleb128 0x3b
+ 949 0066 0B       		.uleb128 0xb
+ 950 0067 27       		.uleb128 0x27
+ 951 0068 0C       		.uleb128 0xc
+ 952 0069 11       		.uleb128 0x11
+ 953 006a 01       		.uleb128 0x1
+ 954 006b 12       		.uleb128 0x12
+ 955 006c 01       		.uleb128 0x1
+ 956 006d 40       		.uleb128 0x40
+ 957 006e 06       		.uleb128 0x6
+ 958 006f 9642     		.uleb128 0x2116
+ 959 0071 0C       		.uleb128 0xc
+ 960 0072 00       		.byte	0
+ 961 0073 00       		.byte	0
+ 962 0074 0A       		.uleb128 0xa
+ 963 0075 2E       		.uleb128 0x2e
+ 964 0076 01       		.byte	0x1
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 24
+
+
+ 965 0077 3F       		.uleb128 0x3f
+ 966 0078 0C       		.uleb128 0xc
+ 967 0079 03       		.uleb128 0x3
+ 968 007a 0E       		.uleb128 0xe
+ 969 007b 3A       		.uleb128 0x3a
+ 970 007c 0B       		.uleb128 0xb
+ 971 007d 3B       		.uleb128 0x3b
+ 972 007e 0B       		.uleb128 0xb
+ 973 007f 27       		.uleb128 0x27
+ 974 0080 0C       		.uleb128 0xc
+ 975 0081 11       		.uleb128 0x11
+ 976 0082 01       		.uleb128 0x1
+ 977 0083 12       		.uleb128 0x12
+ 978 0084 01       		.uleb128 0x1
+ 979 0085 40       		.uleb128 0x40
+ 980 0086 06       		.uleb128 0x6
+ 981 0087 9642     		.uleb128 0x2116
+ 982 0089 0C       		.uleb128 0xc
+ 983 008a 01       		.uleb128 0x1
+ 984 008b 13       		.uleb128 0x13
+ 985 008c 00       		.byte	0
+ 986 008d 00       		.byte	0
+ 987 008e 0B       		.uleb128 0xb
+ 988 008f 05       		.uleb128 0x5
+ 989 0090 00       		.byte	0
+ 990 0091 03       		.uleb128 0x3
+ 991 0092 0E       		.uleb128 0xe
+ 992 0093 3A       		.uleb128 0x3a
+ 993 0094 0B       		.uleb128 0xb
+ 994 0095 3B       		.uleb128 0x3b
+ 995 0096 0B       		.uleb128 0xb
+ 996 0097 49       		.uleb128 0x49
+ 997 0098 13       		.uleb128 0x13
+ 998 0099 02       		.uleb128 0x2
+ 999 009a 0A       		.uleb128 0xa
+ 1000 009b 00       		.byte	0
+ 1001 009c 00       		.byte	0
+ 1002 009d 0C       		.uleb128 0xc
+ 1003 009e 2E       		.uleb128 0x2e
+ 1004 009f 00       		.byte	0
+ 1005 00a0 3F       		.uleb128 0x3f
+ 1006 00a1 0C       		.uleb128 0xc
+ 1007 00a2 03       		.uleb128 0x3
+ 1008 00a3 0E       		.uleb128 0xe
+ 1009 00a4 3A       		.uleb128 0x3a
+ 1010 00a5 0B       		.uleb128 0xb
+ 1011 00a6 3B       		.uleb128 0x3b
+ 1012 00a7 0B       		.uleb128 0xb
+ 1013 00a8 27       		.uleb128 0x27
+ 1014 00a9 0C       		.uleb128 0xc
+ 1015 00aa 11       		.uleb128 0x11
+ 1016 00ab 01       		.uleb128 0x1
+ 1017 00ac 12       		.uleb128 0x12
+ 1018 00ad 01       		.uleb128 0x1
+ 1019 00ae 40       		.uleb128 0x40
+ 1020 00af 06       		.uleb128 0x6
+ 1021 00b0 9742     		.uleb128 0x2117
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 25
+
+
+ 1022 00b2 0C       		.uleb128 0xc
+ 1023 00b3 00       		.byte	0
+ 1024 00b4 00       		.byte	0
+ 1025 00b5 0D       		.uleb128 0xd
+ 1026 00b6 2E       		.uleb128 0x2e
+ 1027 00b7 01       		.byte	0x1
+ 1028 00b8 3F       		.uleb128 0x3f
+ 1029 00b9 0C       		.uleb128 0xc
+ 1030 00ba 03       		.uleb128 0x3
+ 1031 00bb 0E       		.uleb128 0xe
+ 1032 00bc 3A       		.uleb128 0x3a
+ 1033 00bd 0B       		.uleb128 0xb
+ 1034 00be 3B       		.uleb128 0x3b
+ 1035 00bf 0B       		.uleb128 0xb
+ 1036 00c0 27       		.uleb128 0x27
+ 1037 00c1 0C       		.uleb128 0xc
+ 1038 00c2 11       		.uleb128 0x11
+ 1039 00c3 01       		.uleb128 0x1
+ 1040 00c4 12       		.uleb128 0x12
+ 1041 00c5 01       		.uleb128 0x1
+ 1042 00c6 40       		.uleb128 0x40
+ 1043 00c7 06       		.uleb128 0x6
+ 1044 00c8 9742     		.uleb128 0x2117
+ 1045 00ca 0C       		.uleb128 0xc
+ 1046 00cb 01       		.uleb128 0x1
+ 1047 00cc 13       		.uleb128 0x13
+ 1048 00cd 00       		.byte	0
+ 1049 00ce 00       		.byte	0
+ 1050 00cf 0E       		.uleb128 0xe
+ 1051 00d0 2E       		.uleb128 0x2e
+ 1052 00d1 00       		.byte	0
+ 1053 00d2 3F       		.uleb128 0x3f
+ 1054 00d3 0C       		.uleb128 0xc
+ 1055 00d4 03       		.uleb128 0x3
+ 1056 00d5 0E       		.uleb128 0xe
+ 1057 00d6 3A       		.uleb128 0x3a
+ 1058 00d7 0B       		.uleb128 0xb
+ 1059 00d8 3B       		.uleb128 0x3b
+ 1060 00d9 0B       		.uleb128 0xb
+ 1061 00da 27       		.uleb128 0x27
+ 1062 00db 0C       		.uleb128 0xc
+ 1063 00dc 49       		.uleb128 0x49
+ 1064 00dd 13       		.uleb128 0x13
+ 1065 00de 11       		.uleb128 0x11
+ 1066 00df 01       		.uleb128 0x1
+ 1067 00e0 12       		.uleb128 0x12
+ 1068 00e1 01       		.uleb128 0x1
+ 1069 00e2 40       		.uleb128 0x40
+ 1070 00e3 06       		.uleb128 0x6
+ 1071 00e4 9742     		.uleb128 0x2117
+ 1072 00e6 0C       		.uleb128 0xc
+ 1073 00e7 00       		.byte	0
+ 1074 00e8 00       		.byte	0
+ 1075 00e9 0F       		.uleb128 0xf
+ 1076 00ea 34       		.uleb128 0x34
+ 1077 00eb 00       		.byte	0
+ 1078 00ec 03       		.uleb128 0x3
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 26
+
+
+ 1079 00ed 0E       		.uleb128 0xe
+ 1080 00ee 3A       		.uleb128 0x3a
+ 1081 00ef 0B       		.uleb128 0xb
+ 1082 00f0 3B       		.uleb128 0x3b
+ 1083 00f1 0B       		.uleb128 0xb
+ 1084 00f2 49       		.uleb128 0x49
+ 1085 00f3 13       		.uleb128 0x13
+ 1086 00f4 02       		.uleb128 0x2
+ 1087 00f5 0A       		.uleb128 0xa
+ 1088 00f6 00       		.byte	0
+ 1089 00f7 00       		.byte	0
+ 1090 00f8 10       		.uleb128 0x10
+ 1091 00f9 2E       		.uleb128 0x2e
+ 1092 00fa 01       		.byte	0x1
+ 1093 00fb 3F       		.uleb128 0x3f
+ 1094 00fc 0C       		.uleb128 0xc
+ 1095 00fd 03       		.uleb128 0x3
+ 1096 00fe 0E       		.uleb128 0xe
+ 1097 00ff 3A       		.uleb128 0x3a
+ 1098 0100 0B       		.uleb128 0xb
+ 1099 0101 3B       		.uleb128 0x3b
+ 1100 0102 0B       		.uleb128 0xb
+ 1101 0103 27       		.uleb128 0x27
+ 1102 0104 0C       		.uleb128 0xc
+ 1103 0105 49       		.uleb128 0x49
+ 1104 0106 13       		.uleb128 0x13
+ 1105 0107 11       		.uleb128 0x11
+ 1106 0108 01       		.uleb128 0x1
+ 1107 0109 12       		.uleb128 0x12
+ 1108 010a 01       		.uleb128 0x1
+ 1109 010b 40       		.uleb128 0x40
+ 1110 010c 06       		.uleb128 0x6
+ 1111 010d 9742     		.uleb128 0x2117
+ 1112 010f 0C       		.uleb128 0xc
+ 1113 0110 01       		.uleb128 0x1
+ 1114 0111 13       		.uleb128 0x13
+ 1115 0112 00       		.byte	0
+ 1116 0113 00       		.byte	0
+ 1117 0114 11       		.uleb128 0x11
+ 1118 0115 2E       		.uleb128 0x2e
+ 1119 0116 00       		.byte	0
+ 1120 0117 3F       		.uleb128 0x3f
+ 1121 0118 0C       		.uleb128 0xc
+ 1122 0119 03       		.uleb128 0x3
+ 1123 011a 0E       		.uleb128 0xe
+ 1124 011b 3A       		.uleb128 0x3a
+ 1125 011c 0B       		.uleb128 0xb
+ 1126 011d 3B       		.uleb128 0x3b
+ 1127 011e 05       		.uleb128 0x5
+ 1128 011f 27       		.uleb128 0x27
+ 1129 0120 0C       		.uleb128 0xc
+ 1130 0121 11       		.uleb128 0x11
+ 1131 0122 01       		.uleb128 0x1
+ 1132 0123 12       		.uleb128 0x12
+ 1133 0124 01       		.uleb128 0x1
+ 1134 0125 40       		.uleb128 0x40
+ 1135 0126 06       		.uleb128 0x6
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 27
+
+
+ 1136 0127 9742     		.uleb128 0x2117
+ 1137 0129 0C       		.uleb128 0xc
+ 1138 012a 00       		.byte	0
+ 1139 012b 00       		.byte	0
+ 1140 012c 12       		.uleb128 0x12
+ 1141 012d 2E       		.uleb128 0x2e
+ 1142 012e 00       		.byte	0
+ 1143 012f 3F       		.uleb128 0x3f
+ 1144 0130 0C       		.uleb128 0xc
+ 1145 0131 03       		.uleb128 0x3
+ 1146 0132 0E       		.uleb128 0xe
+ 1147 0133 3A       		.uleb128 0x3a
+ 1148 0134 0B       		.uleb128 0xb
+ 1149 0135 3B       		.uleb128 0x3b
+ 1150 0136 05       		.uleb128 0x5
+ 1151 0137 27       		.uleb128 0x27
+ 1152 0138 0C       		.uleb128 0xc
+ 1153 0139 49       		.uleb128 0x49
+ 1154 013a 13       		.uleb128 0x13
+ 1155 013b 11       		.uleb128 0x11
+ 1156 013c 01       		.uleb128 0x1
+ 1157 013d 12       		.uleb128 0x12
+ 1158 013e 01       		.uleb128 0x1
+ 1159 013f 40       		.uleb128 0x40
+ 1160 0140 06       		.uleb128 0x6
+ 1161 0141 9742     		.uleb128 0x2117
+ 1162 0143 0C       		.uleb128 0xc
+ 1163 0144 00       		.byte	0
+ 1164 0145 00       		.byte	0
+ 1165 0146 13       		.uleb128 0x13
+ 1166 0147 01       		.uleb128 0x1
+ 1167 0148 01       		.byte	0x1
+ 1168 0149 49       		.uleb128 0x49
+ 1169 014a 13       		.uleb128 0x13
+ 1170 014b 01       		.uleb128 0x1
+ 1171 014c 13       		.uleb128 0x13
+ 1172 014d 00       		.byte	0
+ 1173 014e 00       		.byte	0
+ 1174 014f 14       		.uleb128 0x14
+ 1175 0150 21       		.uleb128 0x21
+ 1176 0151 00       		.byte	0
+ 1177 0152 49       		.uleb128 0x49
+ 1178 0153 13       		.uleb128 0x13
+ 1179 0154 2F       		.uleb128 0x2f
+ 1180 0155 0B       		.uleb128 0xb
+ 1181 0156 00       		.byte	0
+ 1182 0157 00       		.byte	0
+ 1183 0158 15       		.uleb128 0x15
+ 1184 0159 34       		.uleb128 0x34
+ 1185 015a 00       		.byte	0
+ 1186 015b 03       		.uleb128 0x3
+ 1187 015c 0E       		.uleb128 0xe
+ 1188 015d 3A       		.uleb128 0x3a
+ 1189 015e 0B       		.uleb128 0xb
+ 1190 015f 3B       		.uleb128 0x3b
+ 1191 0160 0B       		.uleb128 0xb
+ 1192 0161 49       		.uleb128 0x49
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 28
+
+
+ 1193 0162 13       		.uleb128 0x13
+ 1194 0163 3F       		.uleb128 0x3f
+ 1195 0164 0C       		.uleb128 0xc
+ 1196 0165 3C       		.uleb128 0x3c
+ 1197 0166 0C       		.uleb128 0xc
+ 1198 0167 00       		.byte	0
+ 1199 0168 00       		.byte	0
+ 1200 0169 00       		.byte	0
+ 1201              		.section	.debug_loc,"",%progbits
+ 1202              	.Ldebug_loc0:
+ 1203              	.LLST0:
+ 1204 0000 00000000 		.4byte	.LFB0
+ 1205 0004 02000000 		.4byte	.LCFI0
+ 1206 0008 0200     		.2byte	0x2
+ 1207 000a 7D       		.byte	0x7d
+ 1208 000b 00       		.sleb128 0
+ 1209 000c 02000000 		.4byte	.LCFI0
+ 1210 0010 04000000 		.4byte	.LCFI1
+ 1211 0014 0200     		.2byte	0x2
+ 1212 0016 7D       		.byte	0x7d
+ 1213 0017 08       		.sleb128 8
+ 1214 0018 04000000 		.4byte	.LCFI1
+ 1215 001c 24000000 		.4byte	.LFE0
+ 1216 0020 0200     		.2byte	0x2
+ 1217 0022 77       		.byte	0x77
+ 1218 0023 08       		.sleb128 8
+ 1219 0024 00000000 		.4byte	0
+ 1220 0028 00000000 		.4byte	0
+ 1221              	.LLST1:
+ 1222 002c 00000000 		.4byte	.LFB1
+ 1223 0030 02000000 		.4byte	.LCFI2
+ 1224 0034 0200     		.2byte	0x2
+ 1225 0036 7D       		.byte	0x7d
+ 1226 0037 00       		.sleb128 0
+ 1227 0038 02000000 		.4byte	.LCFI2
+ 1228 003c 04000000 		.4byte	.LCFI3
+ 1229 0040 0200     		.2byte	0x2
+ 1230 0042 7D       		.byte	0x7d
+ 1231 0043 08       		.sleb128 8
+ 1232 0044 04000000 		.4byte	.LCFI3
+ 1233 0048 06000000 		.4byte	.LCFI4
+ 1234 004c 0200     		.2byte	0x2
+ 1235 004e 7D       		.byte	0x7d
+ 1236 004f 10       		.sleb128 16
+ 1237 0050 06000000 		.4byte	.LCFI4
+ 1238 0054 24000000 		.4byte	.LFE1
+ 1239 0058 0200     		.2byte	0x2
+ 1240 005a 77       		.byte	0x77
+ 1241 005b 10       		.sleb128 16
+ 1242 005c 00000000 		.4byte	0
+ 1243 0060 00000000 		.4byte	0
+ 1244              	.LLST2:
+ 1245 0064 00000000 		.4byte	.LFB2
+ 1246 0068 02000000 		.4byte	.LCFI5
+ 1247 006c 0200     		.2byte	0x2
+ 1248 006e 7D       		.byte	0x7d
+ 1249 006f 00       		.sleb128 0
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 29
+
+
+ 1250 0070 02000000 		.4byte	.LCFI5
+ 1251 0074 04000000 		.4byte	.LCFI6
+ 1252 0078 0200     		.2byte	0x2
+ 1253 007a 7D       		.byte	0x7d
+ 1254 007b 08       		.sleb128 8
+ 1255 007c 04000000 		.4byte	.LCFI6
+ 1256 0080 18000000 		.4byte	.LFE2
+ 1257 0084 0200     		.2byte	0x2
+ 1258 0086 77       		.byte	0x77
+ 1259 0087 08       		.sleb128 8
+ 1260 0088 00000000 		.4byte	0
+ 1261 008c 00000000 		.4byte	0
+ 1262              	.LLST3:
+ 1263 0090 00000000 		.4byte	.LFB3
+ 1264 0094 02000000 		.4byte	.LCFI7
+ 1265 0098 0200     		.2byte	0x2
+ 1266 009a 7D       		.byte	0x7d
+ 1267 009b 00       		.sleb128 0
+ 1268 009c 02000000 		.4byte	.LCFI7
+ 1269 00a0 04000000 		.4byte	.LCFI8
+ 1270 00a4 0200     		.2byte	0x2
+ 1271 00a6 7D       		.byte	0x7d
+ 1272 00a7 08       		.sleb128 8
+ 1273 00a8 04000000 		.4byte	.LCFI8
+ 1274 00ac 08000000 		.4byte	.LFE3
+ 1275 00b0 0200     		.2byte	0x2
+ 1276 00b2 77       		.byte	0x77
+ 1277 00b3 08       		.sleb128 8
+ 1278 00b4 00000000 		.4byte	0
+ 1279 00b8 00000000 		.4byte	0
+ 1280              	.LLST4:
+ 1281 00bc 00000000 		.4byte	.LFB4
+ 1282 00c0 02000000 		.4byte	.LCFI9
+ 1283 00c4 0200     		.2byte	0x2
+ 1284 00c6 7D       		.byte	0x7d
+ 1285 00c7 00       		.sleb128 0
+ 1286 00c8 02000000 		.4byte	.LCFI9
+ 1287 00cc 04000000 		.4byte	.LCFI10
+ 1288 00d0 0200     		.2byte	0x2
+ 1289 00d2 7D       		.byte	0x7d
+ 1290 00d3 08       		.sleb128 8
+ 1291 00d4 04000000 		.4byte	.LCFI10
+ 1292 00d8 06000000 		.4byte	.LCFI11
+ 1293 00dc 0200     		.2byte	0x2
+ 1294 00de 7D       		.byte	0x7d
+ 1295 00df 10       		.sleb128 16
+ 1296 00e0 06000000 		.4byte	.LCFI11
+ 1297 00e4 1C000000 		.4byte	.LFE4
+ 1298 00e8 0200     		.2byte	0x2
+ 1299 00ea 77       		.byte	0x77
+ 1300 00eb 10       		.sleb128 16
+ 1301 00ec 00000000 		.4byte	0
+ 1302 00f0 00000000 		.4byte	0
+ 1303              	.LLST5:
+ 1304 00f4 00000000 		.4byte	.LFB5
+ 1305 00f8 02000000 		.4byte	.LCFI12
+ 1306 00fc 0200     		.2byte	0x2
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 30
+
+
+ 1307 00fe 7D       		.byte	0x7d
+ 1308 00ff 00       		.sleb128 0
+ 1309 0100 02000000 		.4byte	.LCFI12
+ 1310 0104 04000000 		.4byte	.LCFI13
+ 1311 0108 0200     		.2byte	0x2
+ 1312 010a 7D       		.byte	0x7d
+ 1313 010b 08       		.sleb128 8
+ 1314 010c 04000000 		.4byte	.LCFI13
+ 1315 0110 14000000 		.4byte	.LFE5
+ 1316 0114 0200     		.2byte	0x2
+ 1317 0116 77       		.byte	0x77
+ 1318 0117 08       		.sleb128 8
+ 1319 0118 00000000 		.4byte	0
+ 1320 011c 00000000 		.4byte	0
+ 1321              	.LLST6:
+ 1322 0120 00000000 		.4byte	.LFB6
+ 1323 0124 02000000 		.4byte	.LCFI14
+ 1324 0128 0200     		.2byte	0x2
+ 1325 012a 7D       		.byte	0x7d
+ 1326 012b 00       		.sleb128 0
+ 1327 012c 02000000 		.4byte	.LCFI14
+ 1328 0130 04000000 		.4byte	.LCFI15
+ 1329 0134 0200     		.2byte	0x2
+ 1330 0136 7D       		.byte	0x7d
+ 1331 0137 0C       		.sleb128 12
+ 1332 0138 04000000 		.4byte	.LCFI15
+ 1333 013c 06000000 		.4byte	.LCFI16
+ 1334 0140 0200     		.2byte	0x2
+ 1335 0142 7D       		.byte	0x7d
+ 1336 0143 20       		.sleb128 32
+ 1337 0144 06000000 		.4byte	.LCFI16
+ 1338 0148 50000000 		.4byte	.LFE6
+ 1339 014c 0200     		.2byte	0x2
+ 1340 014e 77       		.byte	0x77
+ 1341 014f 20       		.sleb128 32
+ 1342 0150 00000000 		.4byte	0
+ 1343 0154 00000000 		.4byte	0
+ 1344              	.LLST7:
+ 1345 0158 00000000 		.4byte	.LFB7
+ 1346 015c 02000000 		.4byte	.LCFI17
+ 1347 0160 0200     		.2byte	0x2
+ 1348 0162 7D       		.byte	0x7d
+ 1349 0163 00       		.sleb128 0
+ 1350 0164 02000000 		.4byte	.LCFI17
+ 1351 0168 04000000 		.4byte	.LCFI18
+ 1352 016c 0200     		.2byte	0x2
+ 1353 016e 7D       		.byte	0x7d
+ 1354 016f 08       		.sleb128 8
+ 1355 0170 04000000 		.4byte	.LCFI18
+ 1356 0174 06000000 		.4byte	.LCFI19
+ 1357 0178 0200     		.2byte	0x2
+ 1358 017a 7D       		.byte	0x7d
+ 1359 017b 10       		.sleb128 16
+ 1360 017c 06000000 		.4byte	.LCFI19
+ 1361 0180 2C000000 		.4byte	.LFE7
+ 1362 0184 0200     		.2byte	0x2
+ 1363 0186 77       		.byte	0x77
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 31
+
+
+ 1364 0187 10       		.sleb128 16
+ 1365 0188 00000000 		.4byte	0
+ 1366 018c 00000000 		.4byte	0
+ 1367              	.LLST8:
+ 1368 0190 00000000 		.4byte	.LFB8
+ 1369 0194 02000000 		.4byte	.LCFI20
+ 1370 0198 0200     		.2byte	0x2
+ 1371 019a 7D       		.byte	0x7d
+ 1372 019b 00       		.sleb128 0
+ 1373 019c 02000000 		.4byte	.LCFI20
+ 1374 01a0 04000000 		.4byte	.LCFI21
+ 1375 01a4 0200     		.2byte	0x2
+ 1376 01a6 7D       		.byte	0x7d
+ 1377 01a7 08       		.sleb128 8
+ 1378 01a8 04000000 		.4byte	.LCFI21
+ 1379 01ac 14000000 		.4byte	.LFE8
+ 1380 01b0 0200     		.2byte	0x2
+ 1381 01b2 77       		.byte	0x77
+ 1382 01b3 08       		.sleb128 8
+ 1383 01b4 00000000 		.4byte	0
+ 1384 01b8 00000000 		.4byte	0
+ 1385              	.LLST9:
+ 1386 01bc 00000000 		.4byte	.LFB9
+ 1387 01c0 02000000 		.4byte	.LCFI22
+ 1388 01c4 0200     		.2byte	0x2
+ 1389 01c6 7D       		.byte	0x7d
+ 1390 01c7 00       		.sleb128 0
+ 1391 01c8 02000000 		.4byte	.LCFI22
+ 1392 01cc 04000000 		.4byte	.LCFI23
+ 1393 01d0 0200     		.2byte	0x2
+ 1394 01d2 7D       		.byte	0x7d
+ 1395 01d3 08       		.sleb128 8
+ 1396 01d4 04000000 		.4byte	.LCFI23
+ 1397 01d8 20000000 		.4byte	.LFE9
+ 1398 01dc 0200     		.2byte	0x2
+ 1399 01de 77       		.byte	0x77
+ 1400 01df 08       		.sleb128 8
+ 1401 01e0 00000000 		.4byte	0
+ 1402 01e4 00000000 		.4byte	0
+ 1403              	.LLST10:
+ 1404 01e8 00000000 		.4byte	.LFB10
+ 1405 01ec 02000000 		.4byte	.LCFI24
+ 1406 01f0 0200     		.2byte	0x2
+ 1407 01f2 7D       		.byte	0x7d
+ 1408 01f3 00       		.sleb128 0
+ 1409 01f4 02000000 		.4byte	.LCFI24
+ 1410 01f8 04000000 		.4byte	.LCFI25
+ 1411 01fc 0200     		.2byte	0x2
+ 1412 01fe 7D       		.byte	0x7d
+ 1413 01ff 08       		.sleb128 8
+ 1414 0200 04000000 		.4byte	.LCFI25
+ 1415 0204 14000000 		.4byte	.LFE10
+ 1416 0208 0200     		.2byte	0x2
+ 1417 020a 77       		.byte	0x77
+ 1418 020b 08       		.sleb128 8
+ 1419 020c 00000000 		.4byte	0
+ 1420 0210 00000000 		.4byte	0
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 32
+
+
+ 1421              	.LLST11:
+ 1422 0214 00000000 		.4byte	.LFB11
+ 1423 0218 02000000 		.4byte	.LCFI26
+ 1424 021c 0200     		.2byte	0x2
+ 1425 021e 7D       		.byte	0x7d
+ 1426 021f 00       		.sleb128 0
+ 1427 0220 02000000 		.4byte	.LCFI26
+ 1428 0224 04000000 		.4byte	.LCFI27
+ 1429 0228 0200     		.2byte	0x2
+ 1430 022a 7D       		.byte	0x7d
+ 1431 022b 08       		.sleb128 8
+ 1432 022c 04000000 		.4byte	.LCFI27
+ 1433 0230 14000000 		.4byte	.LFE11
+ 1434 0234 0200     		.2byte	0x2
+ 1435 0236 77       		.byte	0x77
+ 1436 0237 08       		.sleb128 8
+ 1437 0238 00000000 		.4byte	0
+ 1438 023c 00000000 		.4byte	0
+ 1439              	.LLST12:
+ 1440 0240 00000000 		.4byte	.LFB12
+ 1441 0244 02000000 		.4byte	.LCFI28
+ 1442 0248 0200     		.2byte	0x2
+ 1443 024a 7D       		.byte	0x7d
+ 1444 024b 00       		.sleb128 0
+ 1445 024c 02000000 		.4byte	.LCFI28
+ 1446 0250 04000000 		.4byte	.LCFI29
+ 1447 0254 0200     		.2byte	0x2
+ 1448 0256 7D       		.byte	0x7d
+ 1449 0257 08       		.sleb128 8
+ 1450 0258 04000000 		.4byte	.LCFI29
+ 1451 025c 14000000 		.4byte	.LFE12
+ 1452 0260 0200     		.2byte	0x2
+ 1453 0262 77       		.byte	0x77
+ 1454 0263 08       		.sleb128 8
+ 1455 0264 00000000 		.4byte	0
+ 1456 0268 00000000 		.4byte	0
+ 1457              		.section	.debug_aranges,"",%progbits
+ 1458 0000 7C000000 		.4byte	0x7c
+ 1459 0004 0200     		.2byte	0x2
+ 1460 0006 00000000 		.4byte	.Ldebug_info0
+ 1461 000a 04       		.byte	0x4
+ 1462 000b 00       		.byte	0
+ 1463 000c 0000     		.2byte	0
+ 1464 000e 0000     		.2byte	0
+ 1465 0010 00000000 		.4byte	.LFB0
+ 1466 0014 24000000 		.4byte	.LFE0-.LFB0
+ 1467 0018 00000000 		.4byte	.LFB1
+ 1468 001c 24000000 		.4byte	.LFE1-.LFB1
+ 1469 0020 00000000 		.4byte	.LFB2
+ 1470 0024 18000000 		.4byte	.LFE2-.LFB2
+ 1471 0028 00000000 		.4byte	.LFB3
+ 1472 002c 08000000 		.4byte	.LFE3-.LFB3
+ 1473 0030 00000000 		.4byte	.LFB4
+ 1474 0034 1C000000 		.4byte	.LFE4-.LFB4
+ 1475 0038 00000000 		.4byte	.LFB5
+ 1476 003c 14000000 		.4byte	.LFE5-.LFB5
+ 1477 0040 00000000 		.4byte	.LFB6
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 33
+
+
+ 1478 0044 50000000 		.4byte	.LFE6-.LFB6
+ 1479 0048 00000000 		.4byte	.LFB7
+ 1480 004c 2C000000 		.4byte	.LFE7-.LFB7
+ 1481 0050 00000000 		.4byte	.LFB8
+ 1482 0054 14000000 		.4byte	.LFE8-.LFB8
+ 1483 0058 00000000 		.4byte	.LFB9
+ 1484 005c 20000000 		.4byte	.LFE9-.LFB9
+ 1485 0060 00000000 		.4byte	.LFB10
+ 1486 0064 14000000 		.4byte	.LFE10-.LFB10
+ 1487 0068 00000000 		.4byte	.LFB11
+ 1488 006c 14000000 		.4byte	.LFE11-.LFB11
+ 1489 0070 00000000 		.4byte	.LFB12
+ 1490 0074 14000000 		.4byte	.LFE12-.LFB12
+ 1491 0078 00000000 		.4byte	0
+ 1492 007c 00000000 		.4byte	0
+ 1493              		.section	.debug_ranges,"",%progbits
+ 1494              	.Ldebug_ranges0:
+ 1495 0000 00000000 		.4byte	.LFB0
+ 1496 0004 24000000 		.4byte	.LFE0
+ 1497 0008 00000000 		.4byte	.LFB1
+ 1498 000c 24000000 		.4byte	.LFE1
+ 1499 0010 00000000 		.4byte	.LFB2
+ 1500 0014 18000000 		.4byte	.LFE2
+ 1501 0018 00000000 		.4byte	.LFB3
+ 1502 001c 08000000 		.4byte	.LFE3
+ 1503 0020 00000000 		.4byte	.LFB4
+ 1504 0024 1C000000 		.4byte	.LFE4
+ 1505 0028 00000000 		.4byte	.LFB5
+ 1506 002c 14000000 		.4byte	.LFE5
+ 1507 0030 00000000 		.4byte	.LFB6
+ 1508 0034 50000000 		.4byte	.LFE6
+ 1509 0038 00000000 		.4byte	.LFB7
+ 1510 003c 2C000000 		.4byte	.LFE7
+ 1511 0040 00000000 		.4byte	.LFB8
+ 1512 0044 14000000 		.4byte	.LFE8
+ 1513 0048 00000000 		.4byte	.LFB9
+ 1514 004c 20000000 		.4byte	.LFE9
+ 1515 0050 00000000 		.4byte	.LFB10
+ 1516 0054 14000000 		.4byte	.LFE10
+ 1517 0058 00000000 		.4byte	.LFB11
+ 1518 005c 14000000 		.4byte	.LFE11
+ 1519 0060 00000000 		.4byte	.LFB12
+ 1520 0064 14000000 		.4byte	.LFE12
+ 1521 0068 00000000 		.4byte	0
+ 1522 006c 00000000 		.4byte	0
+ 1523              		.section	.debug_line,"",%progbits
+ 1524              	.Ldebug_line0:
+ 1525 0000 60010000 		.section	.debug_str,"MS",%progbits,1
+ 1525      02005400 
+ 1525      00000201 
+ 1525      FB0E0D00 
+ 1525      01010101 
+ 1526              	.LASF14:
+ 1527 0000 72656733 		.ascii	"reg32\000"
+ 1527      3200
+ 1528              	.LASF21:
+ 1529 0006 6D657373 		.ascii	"messageTimerInterrupt_SetVector\000"
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 34
+
+
+ 1529      61676554 
+ 1529      696D6572 
+ 1529      496E7465 
+ 1529      72727570 
+ 1530              	.LASF37:
+ 1531 0026 43795261 		.ascii	"CyRamVectors\000"
+ 1531      6D566563 
+ 1531      746F7273 
+ 1531      00
+ 1532              	.LASF30:
+ 1533 0033 6D657373 		.ascii	"messageTimerInterrupt_Disable\000"
+ 1533      61676554 
+ 1533      696D6572 
+ 1533      496E7465 
+ 1533      72727570 
+ 1534              	.LASF3:
+ 1535 0051 73686F72 		.ascii	"short unsigned int\000"
+ 1535      7420756E 
+ 1535      7369676E 
+ 1535      65642069 
+ 1535      6E7400
+ 1536              	.LASF23:
+ 1537 0064 6D657373 		.ascii	"messageTimerInterrupt_SetPriority\000"
+ 1537      61676554 
+ 1537      696D6572 
+ 1537      496E7465 
+ 1537      72727570 
+ 1538              	.LASF18:
+ 1539 0086 6D657373 		.ascii	"messageTimerInterrupt_Stop\000"
+ 1539      61676554 
+ 1539      696D6572 
+ 1539      496E7465 
+ 1539      72727570 
+ 1540              	.LASF11:
+ 1541 00a1 666C6F61 		.ascii	"float\000"
+ 1541      7400
+ 1542              	.LASF1:
+ 1543 00a7 756E7369 		.ascii	"unsigned char\000"
+ 1543      676E6564 
+ 1543      20636861 
+ 1543      7200
+ 1544              	.LASF25:
+ 1545 00b5 696E7465 		.ascii	"interruptState\000"
+ 1545      72727570 
+ 1545      74537461 
+ 1545      746500
+ 1546              	.LASF5:
+ 1547 00c4 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1547      20756E73 
+ 1547      69676E65 
+ 1547      6420696E 
+ 1547      7400
+ 1548              	.LASF9:
+ 1549 00d6 75696E74 		.ascii	"uint8\000"
+ 1549      3800
+ 1550              	.LASF31:
+ 1551 00dc 6D657373 		.ascii	"messageTimerInterrupt_SetPending\000"
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 35
+
+
+ 1551      61676554 
+ 1551      696D6572 
+ 1551      496E7465 
+ 1551      72727570 
+ 1552              	.LASF24:
+ 1553 00fd 7072696F 		.ascii	"priority\000"
+ 1553      72697479 
+ 1553      00
+ 1554              	.LASF28:
+ 1555 0106 6D657373 		.ascii	"messageTimerInterrupt_GetVector\000"
+ 1555      61676554 
+ 1555      696D6572 
+ 1555      496E7465 
+ 1555      72727570 
+ 1556              	.LASF12:
+ 1557 0126 646F7562 		.ascii	"double\000"
+ 1557      6C6500
+ 1558              	.LASF19:
+ 1559 012d 6D657373 		.ascii	"messageTimerInterrupt_Interrupt\000"
+ 1559      61676554 
+ 1559      696D6572 
+ 1559      496E7465 
+ 1559      72727570 
+ 1560              	.LASF17:
+ 1561 014d 6D657373 		.ascii	"messageTimerInterrupt_Start\000"
+ 1561      61676554 
+ 1561      696D6572 
+ 1561      496E7465 
+ 1561      72727570 
+ 1562              	.LASF2:
+ 1563 0169 73686F72 		.ascii	"short int\000"
+ 1563      7420696E 
+ 1563      7400
+ 1564              	.LASF20:
+ 1565 0173 6D657373 		.ascii	"messageTimerInterrupt_StartEx\000"
+ 1565      61676554 
+ 1565      696D6572 
+ 1565      496E7465 
+ 1565      72727570 
+ 1566              	.LASF10:
+ 1567 0191 75696E74 		.ascii	"uint32\000"
+ 1567      333200
+ 1568              	.LASF8:
+ 1569 0198 756E7369 		.ascii	"unsigned int\000"
+ 1569      676E6564 
+ 1569      20696E74 
+ 1569      00
+ 1570              	.LASF22:
+ 1571 01a5 61646472 		.ascii	"address\000"
+ 1571      65737300 
+ 1572              	.LASF7:
+ 1573 01ad 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1573      206C6F6E 
+ 1573      6720756E 
+ 1573      7369676E 
+ 1573      65642069 
+ 1574              	.LASF15:
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 36
+
+
+ 1575 01c4 63796973 		.ascii	"cyisraddress\000"
+ 1575      72616464 
+ 1575      72657373 
+ 1575      00
+ 1576              	.LASF35:
+ 1577 01d1 433A5C55 		.ascii	"C:\\Users\\Sam\\Dropbox\\Work\\2014\\PSoC 4 Modbus "
+ 1577      73657273 
+ 1577      5C53616D 
+ 1577      5C44726F 
+ 1577      70626F78 
+ 1578 01fe 536C6176 		.ascii	"Slave Software\\PSoC 4 Pioneer Modbus Slave\\PSoC 4"
+ 1578      6520536F 
+ 1578      66747761 
+ 1578      72655C50 
+ 1578      536F4320 
+ 1579 022f 2050696F 		.ascii	" Pioneer Modbus Slave.cydsn\000"
+ 1579      6E656572 
+ 1579      204D6F64 
+ 1579      62757320 
+ 1579      536C6176 
+ 1580              	.LASF16:
+ 1581 024b 73697A65 		.ascii	"sizetype\000"
+ 1581      74797065 
+ 1581      00
+ 1582              	.LASF6:
+ 1583 0254 6C6F6E67 		.ascii	"long long int\000"
+ 1583      206C6F6E 
+ 1583      6720696E 
+ 1583      7400
+ 1584              	.LASF13:
+ 1585 0262 63686172 		.ascii	"char\000"
+ 1585      00
+ 1586              	.LASF29:
+ 1587 0267 6D657373 		.ascii	"messageTimerInterrupt_GetState\000"
+ 1587      61676554 
+ 1587      696D6572 
+ 1587      496E7465 
+ 1587      72727570 
+ 1588              	.LASF36:
+ 1589 0286 6D657373 		.ascii	"messageTimerInterrupt_GetPriority\000"
+ 1589      61676554 
+ 1589      696D6572 
+ 1589      496E7465 
+ 1589      72727570 
+ 1590              	.LASF33:
+ 1591 02a8 474E5520 		.ascii	"GNU C 4.7.3 20130312 (release) [ARM/embedded-4_7-br"
+ 1591      4320342E 
+ 1591      372E3320 
+ 1591      32303133 
+ 1591      30333132 
+ 1592 02db 616E6368 		.ascii	"anch revision 196615]\000"
+ 1592      20726576 
+ 1592      6973696F 
+ 1592      6E203139 
+ 1592      36363135 
+ 1593              	.LASF26:
+ 1594 02f1 7072696F 		.ascii	"priorityOffset\000"
+ARM GAS  C:\Users\Sam\AppData\Local\Temp\ccFNtiZ6.s 			page 37
+
+
+ 1594      72697479 
+ 1594      4F666673 
+ 1594      657400
+ 1595              	.LASF4:
+ 1596 0300 6C6F6E67 		.ascii	"long int\000"
+ 1596      20696E74 
+ 1596      00
+ 1597              	.LASF27:
+ 1598 0309 6D657373 		.ascii	"messageTimerInterrupt_Enable\000"
+ 1598      61676554 
+ 1598      696D6572 
+ 1598      496E7465 
+ 1598      72727570 
+ 1599              	.LASF0:
+ 1600 0326 7369676E 		.ascii	"signed char\000"
+ 1600      65642063 
+ 1600      68617200 
+ 1601              	.LASF32:
+ 1602 0332 6D657373 		.ascii	"messageTimerInterrupt_ClearPending\000"
+ 1602      61676554 
+ 1602      696D6572 
+ 1602      496E7465 
+ 1602      72727570 
+ 1603              	.LASF34:
+ 1604 0355 2E5C4765 		.ascii	".\\Generated_Source\\PSoC4\\messageTimerInterrupt.c"
+ 1604      6E657261 
+ 1604      7465645F 
+ 1604      536F7572 
+ 1604      63655C50 
+ 1605 0385 00       		.ascii	"\000"
+ 1606              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.3 20130312 (release) [ARM/embedded-4_7-br
